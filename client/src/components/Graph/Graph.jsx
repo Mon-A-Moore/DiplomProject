@@ -76,39 +76,54 @@ const	balanceOutputVariables= [
 
 
 
-const nods=[],edgs=[];
-	balanceOutputVariables.forEach((item)=>{
-		if(item.target!=="NULL" && item.sourse!=="NULL")
-		{
-		edgs.push={data: { id: edgs.length, source: item.source, target: item.target,label: item.name } };
-		const a= item.sourse;
-		const aa= nods.find(item =>item.data.id ===a);
-		if(aa===undefined)
-		nods.push ={data: { id: a, name: nods.length }};
 
-		const b= item.target;
-		const bb= nods.find(item =>item.data.id ===a);
-		if(bb===undefined)
-		nods.push ={data: { id: b, name: nods.length  }};
-		}
-		else{
-			if(item.target==="NULL")
-			{
-
-			}
-			if(item.sourse==="NULL")
-			{
-				
-			}
-		}
-
-	})
 
 
 
 
 useEffect(() => {
-	var cy = window.cy = cytoscape({
+	const nods=[],edgs=[];
+	let chetchik=1;
+	balanceOutputVariables.forEach((item)=>{
+		if(item.target!=="NULL" && item.source!=="NULL")
+		{
+			console.log(item)
+		edgs.push({data: { id: `0-${item.id}`, source: item.source, target: item.target,label: item.name } });
+		const a= item.source;
+		const aa= nods.find(item =>item.data.id ===a);
+		if(aa===undefined)
+		{
+		nods.push({data: { id: `${a}`, name: chetchik }});
+		chetchik++;
+		}
+		const b= item.target;
+		const bb= nods.find(item =>item.data.id ===b);
+		if(bb===undefined)
+		{
+		nods.push({data: { id: `${b}`, name: chetchik  }});
+		chetchik++;
+		}
+		}
+		else{
+			if(item.target==="NULL")
+			{
+				
+				edgs.push({data: { id: `0-${item.id}`, source: item.source, target: `${nods.length}`,label: item.name } });
+				nods.push({data: { id: nods.length}, type: "endNode"});
+			}
+			if(item.source==="NULL")
+			{
+				
+				edgs.push({data: { id: `0-${item.id}`, source: `${nods.length}`, target: item.target, label: item.name } });
+				nods.push({data: { id: nods.length}, type: "endNode"});
+			}
+		}
+
+	})
+	console.log(nods)
+	console.log('fffffffffff')
+	console.log(edgs)
+	let cy = window.cy = cytoscape({
 		container: document.getElementById('cy'),
 		style: cytoscape.stylesheet()
 		.selector('edge')
@@ -127,6 +142,10 @@ useEffect(() => {
 
 			.selector('node')
 				.css({
+					'background-color': 'white' 
+				})
+				.selector('node[name]')
+				.css({
 				"text-valign": "center",//высота надписи по вертикали
     		"text-halign": "center", // надписи по горизонтали
  
@@ -136,7 +155,10 @@ useEffect(() => {
 					'text-outline-color': '#888',
 					'background-color': '#888' 
 				})
-
+/* 				.selector('node[type]')
+				.css({
+					'background-color': 'black' ,
+				}) */
 
 			.selector(':selected')
 				.css({
@@ -150,6 +172,11 @@ useEffect(() => {
 
 
 		elements: {
+			nodes: nods,
+			edges: edgs,
+		},
+
+	/* 	elements: {
 			nodes: [
 				{ data: { id: 'a',name:'1' } },
 				{ data: { id: 'b',name:'2' } },
@@ -164,10 +191,11 @@ useEffect(() => {
 				{ data: { id: 'dd', source: 'a', target: 'd',label: "X1" } },
 				
 			]
-		},
+		}, */
 
 		layout: {
 			name: 'breadthfirst',
+		/* 	name: 'breadthfirst', */
 		}
 	});
 
@@ -184,23 +212,61 @@ useEffect(() => {
 ]);  */
 
 
-/* 	var a = cy.getElementById('a'); */
+/* 	var a = 
+cy.getElementById('a'); */
+
+
+const makeDiv =(text)=>{
+	let div = document.createElement('div');
+
+	div.classList.add(style.popperDiv);
+
+	div.innerHTML = text;
+
+	divWrapper.appendChild( div );
+
+	return div;
+};
+
+
+
+
 
 let divWrapper = document.getElementById('divWrapper');
 
-	var ab = cy.getElementById('ab');
+	edgs.forEach(item=>{
+		let variable= cy.getElementById(item.data.id);
 
-	var makeDiv = function(text){
-		var div = document.createElement('div');
+		const element = balanceOutputVariables.find(elem =>`0-${elem.id}` === item.data.id);
 
-		div.classList.add(style.popperDiv);
+		let popperAB = variable.popper({
+			content:  makeDiv(
+				` 'value': ${element.value},
+					'upperBound': ${element.upperBound},
+					'lowerBound': ${element.lowerBound},`),
+		});
 
-		div.innerHTML = text;
+		let updateAB = function(){
+			popperAB.update();
+		};
+	
+		variable.connectedNodes().on('position', updateAB);
+		cy.on('pan zoom resize', updateAB);
+	
+	
+	})
 
-		divWrapper.appendChild( div );
 
-		return div;
-	};
+
+
+
+
+
+
+
+
+
+
 
 
 /* 	var popperA = a.popper({
@@ -221,16 +287,16 @@ let divWrapper = document.getElementById('divWrapper');
 		content: function(){ return makeDiv('статичный див'); }
 	}); */
 
-	var popperAB = ab.popper({
-		content: function(){ return makeDiv('под стрелкой'); }
-	});
 
-	var updateAB = function(){
-		popperAB.update();
-	};
 
-	ab.connectedNodes().on('position', updateAB);
-	cy.on('pan zoom resize', updateAB);
+
+
+
+
+
+
+
+
 
 /* 	let cy = cytoscape({
 		container: document.getElementById('cy'), // container to render in

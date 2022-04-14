@@ -1,11 +1,15 @@
 .cy {
-  width: 600px;
-  height: 600px;
+  width: 100vw;
+  height: 100vh;
   display: block;
   background-color: #fff;
 }
 .popperDiv{
-	background-color: red;
+	width: 220px;
+  height: 100px;
+	border-radius: 10px;
+	border: 3px solid red;
+	background-color: azure;
 }
 .divWrapper{
 

@@ -1,7 +1,4 @@
 import React, { useState } from 'react';
-import CreateBalance from '../../components/Modal/CreateBalance';
-import AddUser from '../../components/Modal/AddUser/AddUser';
-import Modal from '../../components/Modal/Modal';
 import style from './admin.module.scss';
 import { balanceCalculationCompany, fetchAllbalanceCalculationCompany, fetchOnebalanceCalculationCompany, getSortBalance, updateOneBalanceCalculationCompany } from '../../http/balanceAPI';
 import Graph from '../../components/Graph/Graph';
