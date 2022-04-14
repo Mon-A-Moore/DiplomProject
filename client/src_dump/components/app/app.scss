@@ -1,0 +1,44 @@
+.container {
+  width: 97vw;
+  height: 100vh;
+  background-color: #0f0f0f;
+  display: grid;
+	grid-template-columns: 250px 1fr;
+  grid-template-rows:  1fr;
+	grid-template-areas: 
+    " sidebar header "
+    " main main"  ;
+  h1 {
+    color: #ffffff;
+    font-size: 16px;
+  }
+  h2 {
+    font-style: normal;
+    font-size: 16px;
+    line-height: 20px;
+    color: #aaaaaa;
+  }
+	.sidebar{
+		grid-area: sidebar;
+	}
+  .header {
+		grid-area: header;
+  }
+  .main {
+		grid-area: main;
+  }
+}
+@media screen and (max-width: 1376px) {
+  .container {
+    margin: 0;
+  }
+}
+.sidebar-active{
+	grid-template-areas: 
+    " sidebar header "
+    " sidebar main"  ;
+
+		.list{
+			display: list-item;
+		}
+}

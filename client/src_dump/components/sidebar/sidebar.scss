@@ -1,0 +1,20 @@
+.sidebar {
+  background-color: red;
+}
+
+.sidebar-active{
+	grid-template-areas: 
+    " sidebar header "
+    " sidebar main"  ;
+
+		.list{
+			display: list-item;
+		}
+}
+.toolbar {
+  display: flex;
+  justify-content: space-around;
+  background-color: brown;
+}
+
+

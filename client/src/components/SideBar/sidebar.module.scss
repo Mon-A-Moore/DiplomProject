@@ -1,0 +1,44 @@
+.container{
+	background-color: var(--color-bg);
+	min-width: 60px;
+	display: flex;
+	flex-direction: column;
+	
+}
+
+.button{
+	height: 40px;
+	width: 40px;
+	margin: 2px 0;
+	border: 0;
+	background-color: var(--color-bg);
+	position: relative;
+	overflow: hidden;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+
+}
+.button:hover{
+	background-color: white
+	
+}
+.button:active{
+	background-color:aqua
+}
+.link{
+	display: flex;
+	flex-direction: row;
+
+}
+
+.block{
+	height: 100%;
+	width: 5px;
+
+}
+.block_img{
+	height: 100%;
+	width: 100%;
+	background-color: var(--color-bg);
+}

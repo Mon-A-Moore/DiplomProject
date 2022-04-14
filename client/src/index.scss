@@ -1,0 +1,25 @@
+* {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  outline: none;
+}
+body {
+  background: var(--color-bg);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+}
+:root {
+  --color-bg: #0e101c;
+  --color-auf: #2a68da;
+	--color-auf-lite: #31a6f5;
+
+  --color-active: white;
+	--color-bar:rgb(52,58,65);
+	--color-main: #f8f9fa;
+	
+}
+
+/* --color-auf: #0f7dc6;
+--color-auf-lite: #52b4f5; */

@@ -1,0 +1,74 @@
+.container{
+	width: 100%;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+.block{
+	position: relative;
+	width: 80%;
+	height: 100%;
+	display: flex; 	
+	justify-content: center;
+	align-items: center;
+
+}
+.video{
+	height: 600px;
+	width: 600px;
+	position: absolute;
+	z-index: 2;
+	border-radius: 50%;
+	opacity: 90%;
+	border: medium dashed #011D4B;
+	
+
+}
+.video__back{
+	height: 100%;
+	width: 100%;
+	position: absolute;
+	background: radial-gradient(50% 50%, #011D4B, #0e101c);
+	opacity: 60%;
+	z-index: 1;
+}
+.centre{
+	position: absolute;
+	z-index: 3;
+}
+.button{
+	top:-40px;
+	right: -40px;
+	position: absolute;
+	height: 80px;
+	width: 80px;
+	border-radius: 50%;
+	border: 0;
+	background: radial-gradient(60% 60%,#0e101c, #1E4576,);
+	color: white;
+	z-index: 2;
+}
+.button:hover{
+	border: 2px dotted green;
+	cursor:pointer;
+}
+.button:active{
+	transition: 0.3s all;
+  transform: translateY(3px);
+  border: 1px solid transparent ;
+  opacity: 0.8;
+	cursor:pointer;
+}
+.button__back{
+	top:-45px;
+	right: -45px;
+	position: absolute;
+	height: 90px;
+	width: 90px;
+	border-radius: 50%;
+	border: 0;
+	background: radial-gradient(50% 50%,#1E4576,#18345F);
+	z-index: 1;
+	opacity: 45%;
+}

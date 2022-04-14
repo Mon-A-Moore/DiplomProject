@@ -1,0 +1,25 @@
+.footer{
+min-width: 100%;
+min-height: 60px;
+background-color: var(--color-br);
+display: grid;
+grid-template-columns:  calc((100% - 60px)/100*10 + 60px ) auto calc((100% - 60px)/100*10);
+}
+
+
+.mid{
+	grid-column-start: 2;
+  grid-column-end: 3;
+
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: space-between;
+}
+.test{
+	width: 100%;
+	height: 15px;
+	background-color: var(--color-main);
+	border-radius: 0% 0% 100% 100% / 150% 0% 300% 300% ;
+}

@@ -1,0 +1,49 @@
+.navbar{
+min-width: 100%;
+min-height: 60px;
+background-color: var(--color-br);
+display: grid;
+grid-template-columns:  calc((100% - 60px)/100*10 + 60px ) auto calc((100% - 60px)/100*10);
+
+
+}
+
+.logo{
+	height: 100%;
+  grid-column-start: 1;
+  grid-column-end: 2;
+
+}
+.auf{
+
+	height: 100%;
+  grid-column-start: 3;
+  grid-column-end: 4;
+
+	display: flex;
+	flex-direction: row;
+}
+.button{
+	width: 40px;
+	height: 40px;
+}
+
+.title{
+	color:green;
+	flex: 0 1 auto;
+}
+.mid{
+	grid-column-start: 2;
+  grid-column-end: 3;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: space-between;
+}
+.test{
+	width: 100%;
+	height: 15px;
+	background-color: var(--color-main);
+	border-radius: 100% 100% 0% 0% / 300% 300% 0% 150% ;
+}
