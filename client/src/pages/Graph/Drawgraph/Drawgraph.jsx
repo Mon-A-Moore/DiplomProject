@@ -1,13 +1,30 @@
-import React, { useEffect } from 'react';
-import style from './graph.module.scss';
+import React, { useEffect, useState } from 'react';
+import style from './drawgraph.module.scss';
 import cytoscape from 'cytoscape';
 import popper from 'cytoscape-popper';
 
 //import classNames from 'classnames'
 cytoscape.use( popper );
 
-const Graph = () => {
+const Drawgraph = ({aaa}) => {
+	console.log("aaa");
+console.log(aaa);
+/* 	const [balanceOutputVariables, setState] = useState([]);
+	const [kkk, setKkk] = useState([]);
+	useEffect(() => {
+		if(aaa!==null){
+			setKkk(aaa.calculation_output.balanceOutputVariables);
+		}
+	}, [aaa]); */
 
+	const [balanceOutputVariables, setState] = useState([]);
+	useEffect(() => {
+		if(aaa!==null){
+			setState(aaa.calculation_output.balanceOutputVariables)
+		}
+	}, [aaa]);
+
+	/* 
 const	balanceOutputVariables= [
     {
       id: "00000000-0000-0000-0000-000000000001",
@@ -74,7 +91,7 @@ const	balanceOutputVariables= [
     }
   ]
 
-
+ */
 
 
 
@@ -82,12 +99,13 @@ const	balanceOutputVariables= [
 
 
 useEffect(() => {
+/* 	setState(kkk); */
 	const nods=[],edgs=[];
 	let chetchik=1;
 	balanceOutputVariables.forEach((item)=>{
 		if(item.target!=="NULL" && item.source!=="NULL")
 		{
-			console.log(item)
+			/* console.log(item) */
 		edgs.push({data: { id: `0-${item.id}`, source: item.source, target: item.target,label: item.name } });
 		const a= item.source;
 		const aa= nods.find(item =>item.data.id ===a);
@@ -120,9 +138,9 @@ useEffect(() => {
 		}
 
 	})
-	console.log(nods)
+/* 	console.log(nods)
 	console.log('fffffffffff')
-	console.log(edgs)
+	console.log(edgs) */
 	let cy = window.cy = cytoscape({
 		container: document.getElementById('cy'),
 		style: cytoscape.stylesheet()
@@ -398,7 +416,7 @@ cy.on('pan zoom resize', update);
 	 */
 
 
-}, []); 
+}, [aaa]); 
 
 
 	
@@ -410,4 +428,4 @@ cy.on('pan zoom resize', update);
 		);
 };
 
-export default Graph;
+export default Drawgraph;

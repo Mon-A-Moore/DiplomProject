@@ -30,13 +30,13 @@ const AccordSolver = async (file) => {
 class BalanceController {
   async DateSort(req, res, next) {
     try {
-      const { companyId, dataStart, dataEnd } = req.params;
+      const { factoryId, dataStart, dataEnd } = req.params;
       /* 		console.info(dataStart)
 		console.info(dataEnd) */
       const balance = await BalanceCalculation.findAll({
         order: [['createdAt', 'DESC']],
         where: {
-          companyId: companyId,
+          factoryId: factoryId,
           createdAt: {
             [Op.and]: [{ [Op.gte]: dataStart }, { [Op.lte]: dataEnd }],
           },
@@ -69,9 +69,9 @@ class BalanceController {
 
   async getAll(req, res, next) {
     try {
-      const { companyId } = req.params;
+      const { factoryId } = req.params;
       const balances = await BalanceCalculation.findAll({
-        where: { companyId: companyId },
+        where: { factoryId: factoryId },
         include: [
           {
             model: СalculationInput,
@@ -99,10 +99,10 @@ class BalanceController {
 
   async getOne(req, res, next) {
     try {
-      const { companyId, id } = req.params;
+      const { factoryId, id } = req.params;
 
       const balance = await BalanceCalculation.findOne({
-        where: { id: id, companyId: companyId },
+        where: { id: id, factoryId: factoryId },
         include: [
           {
             model: СalculationInput,
@@ -254,12 +254,10 @@ class BalanceController {
 
   async balanceCalculation(req, res, next) {
     try {
+			const {factoryId} = req.params;
       let input = req.body;
-      const { companyId } = input;
-      delete input.companyId;
-
       const balancecalculation = await BalanceCalculation.create({
-        companyId: companyId,
+        factoryId: factoryId,
       });
       const calculationinput = await СalculationInput.create({
         balanceCalculationId: balancecalculation.id,
@@ -269,7 +267,7 @@ class BalanceController {
         balanceSettingsConstraints:
           input.balanceSettings.balanceSettingsConstraints,
       });
-
+ 
       await input.BalanceInputVariables.forEach((item) =>
         СalculationInputVariables.create({
           id: item.id,

@@ -13,7 +13,7 @@ import { Context } from '../app/App';
 const SideBar = observer(() => {
   const { state } = useContext(Context);
   const location = useLocation();
-	const isHomepage = (location.pathname === HOMEPAGE_ROUTE)? true: (location.pathname === COMPANY_REGISTRATION_ROUTE)? true:false;
+	const isHomepage = (location.pathname === HOMEPAGE_ROUTE)? true: (location.pathname === COMPANY_REGISTRATION_ROUTE)? true: false;
 
   return (
     <>

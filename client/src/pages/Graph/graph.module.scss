@@ -1,0 +1,224 @@
+
+.container{
+	width: 100vw;
+	height: 100vh;
+	background-color: #272822;
+	display: flex;
+	flex-direction: column;
+}
+.title{
+	font-size: 21px;
+	background-color: beige;
+	font-family: 'Annie Use Your Telescope', cursive;
+}
+
+
+
+/* .burger{
+	padding: 5px;
+	background-color: gray;
+	position: fixed;
+	z-index: 50;
+	display: flex;
+	align-items: center;
+	cursor: pointer;
+}
+.burger_btn{
+width: 20px;
+height: 20px;
+position: relative;
+
+}
+
+.burger_btn::before{
+	content: '';
+	position: absolute;
+	top: 0;
+	width: 20px;
+	background-color: black;
+	height: 2px;
+}
+.burger_btn span{
+	content: '';
+	position: absolute;
+	top: 9px;
+	width: 20px;
+	background-color: black;
+	height: 2px;
+}
+.burger_btn::after{
+	content: '';
+	position: absolute;
+	bottom: 0;
+	width: 20px;
+	background-color: black;
+	height: 2px;
+}
+.сontrolPanel{
+	position: fixed;
+	width: 100vw;
+	height: 100vh;
+	top:50px;
+	left: 0;
+	transform: translateY(-130%);
+	transition: all 0.2s;
+	background-color: rgb(255, 127, 191);
+}
+.сontrolPanel.active{
+	transform: translateY(0);
+}
+.blur{
+	width: 100%;
+	height: 100vh;
+	left:30%;
+	backdrop-filter: blur(2px);
+	position: absolute;
+} */
+.svgDiv{
+	top: 0;
+	right: 0;
+	position: fixed;
+	margin: 20px;
+	width: 30px;
+	height: 30px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	border-radius: 5px;
+	background-color: var(--color-bg);
+	opacity: 80%;
+	z-index: 100;
+}
+.svg{
+	width: 17px;
+	height: 28px;
+	transform: matrix(1, 0, 0, 1, 0, 0);
+
+g{
+	fill: var(--color-auf-lite);
+	fill-rule: evenodd;
+}
+}
+.svg:hover,.svgActive{
+	cursor: pointer;
+
+	transition: 4s;
+
+
+  path:first-child,:nth-child(3) {
+    -webkit-transform: translateY(0px);
+		transform: translateY(0px);
+}
+path:nth-child(2) {
+	-webkit-transform: translateY(0px);
+	transform: translateY(0px);
+}
+}
+
+.svgUnActive{
+	cursor: pointer;
+
+	transition: 4s;
+
+  path:first-child,:nth-child(3) {
+    -webkit-transform: translateY(-3px);
+		transform: translateY(-3px);
+}
+path:nth-child(2) {
+	-webkit-transform: translateY(-3px);
+	transform: translateY(3px);
+}
+}
+
+.menu{
+	padding: 10px;
+	position: fixed;
+	min-width: 310px;
+	min-height: 250px;
+	border-radius: 0 0 0 10px;
+	top: 0;
+	right: 0;
+	transition: all 0.2s;
+	background-color: rgb(195, 219, 241);
+	display: flex;
+	flex-direction: column;
+	gap:5px;
+}
+.menu_active{
+	transform: translateY(0%);
+	
+}
+.menu_unactive{
+	transform: translateY(-100%);
+	
+}
+.graphData{
+	display: flex;
+	flex-direction: row;
+	gap:1ch;
+}
+.inputDiv{
+	display:flex;
+	flex-direction: column;
+	align-items: center;
+}
+.input{
+  min-width: 15ch;
+  max-width: 25ch;
+  border: 1px solid var(--select-border);
+  border-radius: 0.25em;
+  padding: 0.25em 0.5em;
+  font-size: 1rem;
+
+}
+
+
+.select {
+  display: grid;
+  grid-template-areas: "select";
+  align-items: center;
+  position: relative;
+
+  select,
+  &::after {
+    grid-area: select;
+  }
+
+  min-width: 25ch;
+  max-width: 25ch;
+
+  border: 1px solid var(--select-border);
+  border-radius: 0.25em;
+  padding: 0.25em 0.5em;
+
+  font-size: 1rem;
+  cursor: pointer;
+  line-height: 1.4;
+
+  // Optional styles
+  // remove for transparency
+  background-color: #fff;
+  background-image: linear-gradient(to top, #f9f9f9, #fff 33%);
+
+  // Custom arrow
+  &:not(.selectMultiple)::after {
+    content: "";
+    justify-self: end;
+    width: 0.8em;
+    height: 0.5em;
+    background-color: var(--select-arrow);
+    clip-path: polygon(100% 0%, 0 0%, 50% 100%);
+  }
+}
+.selectMultiple{
+	max-width: 30ch;
+}
+
+.label {
+  font-size: 1.125rem;
+  font-weight: 500;
+}
+
+.select + label {
+  margin-top: 2rem;
+}

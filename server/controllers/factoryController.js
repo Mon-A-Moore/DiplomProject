@@ -1,65 +1,56 @@
-const uuid = require('uuid')
-const path = require('path')
-const { Factory, FactoryInfo } = require('../models/models');
+
+const { Factory } = require('../models/models');
 const ApiError = require('../error/ApiError');
 
 class FactoryController {
+
 	async create(req, res,next) {
 		try{
-    const { name,legal_address,companyId,info } = req.body;
-    const {img} = req.files
-		let fileName = uuid.v4() + ".jpg"
-		img.mv(path.resolve(__dirname,'..','static',fileName))
-
-		const factory = await Factory.create({name,legal_address,companyId,img: fileName})
-
-		if (info) {
-			info = JSON.parse(info)
-			info.forEach(i =>
-				FactoryInfo.create({
-							title: i.title,
-							description: i.description,
-							companyId: factory.id
-					})
-			)
-	}
-		return res.json(factory)
+			const { name,companyId } = req.body;
+		await Factory.create({
+				name: name,
+        companyId: companyId,
+      });
+		return;
 		}
 		catch(e){
 			next(ApiError.badRequest(e.message))
 		}
   }
 
-	async getAll(req, res) {
-		let {companyId, limit, page} = req.query
-		page = page || 1
-		limit = limit || 9
-		let offset = page * limit - limit
-		let factorys;
-		if (!companyId) {
-			factorys = await Factory.findAndCountAll({limit, offset})
-		}
-		if (companyId) {
-			factorys = await Factory.findAndCountAll({where:{companyId}, limit, offset})
-		}
+
+	async getAllfactoryCompany(req, res,next) {
+		try{
+			const {companyId } = req.params;
+			/* console.info(companyId); */
+			const factorys = await Factory.findAll({
+        where: { companyId: companyId }});
+				if (!factorys) {
+					return next(
+						ApiError.badRequest(`Фабрики компании не найдены`)
+					);
+				}
+				
+				/* console.info(factorys); */
 		return res.json(factorys)
-}
+		}
+		catch(e){
+			next(ApiError.badRequest(e.message))
+		}
+  }
 
-  async getOne(req, res) {
-const{id}=req.params
-const factory = await Factory.findOne(
-	{
-		where:{id},
-		include:[{model:FactoryInfo, as:'info'}]
 
-	}
-)
-return res.json(factory)
-	}
-
-	async deleteOne(req, res) {
-		
-	}
+	async delete(req, res,next) {
+		try{
+			const {id} = req.params;
+			Factory.destroy({ where: { id: id} });
+			 
+		return ;
+		}
+		catch(e){
+			next(ApiError.badRequest(e.message))
+		}
+  }
 
 }
 

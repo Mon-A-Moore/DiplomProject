@@ -39,18 +39,22 @@ const Auth = observer(() => {
       if (isLogin) {
         data = await login(data.email, data.password);
 				setState(prev=>({...prev,user:true}));
-
+				if(data.companyId!==null)
 				navigate(COMPANY_ROUTE+'/'+ data.companyId,{ replace: true });
+				else
+				navigate(COMPANY_REGISTRATION_ROUTE,{ replace: true });
       } else {
-        data = await registration(data.email, data.password, data.tel);
+        await registration(data.email, data.password, data.tel);
 				data =await checkUsersCompany({id:localStorage.id});
-
 
 
 		if(data.err===1)
 				{
 					setState(prev=>({...prev,user:true}))
+					if(data.companyId!==null)
 					navigate(COMPANY_ROUTE+'/'+ data.companyId,{ replace: true });
+					else
+					navigate(COMPANY_REGISTRATION_ROUTE,{ replace: true });
 				}
 				else{
 				navigate(COMPANY_REGISTRATION_ROUTE,{ replace: true });

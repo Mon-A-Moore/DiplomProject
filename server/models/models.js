@@ -20,18 +20,31 @@ const CompanyInfo = sequelize.define('company_info', {
   id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
   title: { type: DataTypes.STRING, allowNull: false },
   description: { type: DataTypes.STRING, allowNull: false },
-});
+},
+{onDelete: 'cascade', hooks:true}
+);
 const CompanyUsers = sequelize.define('company_users', {
   id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
   email: { type: DataTypes.STRING , unique: true , allowNull: false },
 });
 
+const Factory = sequelize.define('factory', {
+  id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+	name: { type: DataTypes.STRING, unique: true, allowNull: false },
+}
+,
+{
+	createdAt: false,
+	updatedAt: false, onDelete: 'cascade', hooks:true,
+});
 
 //----------------------------------
 //расчёт баланса
 const BalanceCalculation = sequelize.define('balance_calculation', {
   id: { type: DataTypes.INTEGER, primaryKey: true, unique: true, autoIncrement: true },
-});
+}
+,
+{onDelete: 'cascade', hooks:true,});
 //---
 const СalculationInput = sequelize.define('calculation_input', {
   id: { type: DataTypes.INTEGER, primaryKey: true, unique: true, autoIncrement: true },
@@ -39,7 +52,7 @@ const СalculationInput = sequelize.define('calculation_input', {
 ,
 {
 	createdAt: false,
-	updatedAt: false,
+	updatedAt: false,onDelete: 'cascade', hooks:true,
 });
 
 const СalculationBalanceSettings = sequelize.define('calculation_input_settings', {
@@ -49,7 +62,7 @@ const СalculationBalanceSettings = sequelize.define('calculation_input_settings
 ,
 {
 	createdAt: false,
-	updatedAt: false,
+	updatedAt: false,onDelete: 'cascade', hooks:true,
 });
 
 
@@ -73,7 +86,7 @@ const СalculationInputVariables = sequelize.define('calculation_input_variables
 ,
 {
 	createdAt: false,
-	updatedAt: false,
+	updatedAt: false,onDelete: 'cascade', hooks:true,
 });
 
 //-
@@ -90,7 +103,7 @@ const СalculationOutput = sequelize.define('calculation_output', {
 ,
 {
 	createdAt: false,
-	updatedAt: false,
+	updatedAt: false,onDelete: 'cascade', hooks:true,
 });
 
 const СalculationOutputVariables = sequelize.define('calculation_output_variables', {
@@ -105,7 +118,7 @@ const СalculationOutputVariables = sequelize.define('calculation_output_variabl
 },
 {
 	createdAt: false,
-	updatedAt: false,
+	updatedAt: false,onDelete: 'cascade', hooks:true,
 }
 ); 
 
@@ -121,8 +134,11 @@ CompanyInfo.belongsTo(Company);
 Company.hasMany(CompanyUsers, { as: 'companyusers' });
 CompanyUsers.belongsTo(Company);
 
-Company.hasMany(BalanceCalculation);
-BalanceCalculation.belongsTo(Company);
+Company.hasMany(Factory);
+Factory.belongsTo(Company);
+
+Factory.hasMany(BalanceCalculation);
+BalanceCalculation.belongsTo(Factory);
 
 BalanceCalculation.hasOne(СalculationInput);
 СalculationInput.belongsTo(BalanceCalculation);
@@ -147,6 +163,7 @@ module.exports = {
   Company,
   CompanyInfo,
 	CompanyUsers,
+	Factory,
   //balance
 	BalanceCalculation,//расчёт баланса
   СalculationInput,

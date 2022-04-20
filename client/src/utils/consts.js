@@ -6,4 +6,5 @@ export const COMPANY_ROUTE = '/company'
 export const COMPANY_REGISTRATION_ROUTE = '/company/registration'
 export const FACTORY_ROUTE = '/factory'
 export const BALANCE_ROUTE = '/balance'
+export const GRAPH_ROUTE = '/graph'
 

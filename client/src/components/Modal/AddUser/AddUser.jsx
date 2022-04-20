@@ -67,6 +67,8 @@ const AddUser = ({setActive}) => {
 			{
 			formData.append('companyusers', JSON.stringify(companyusers));
 			await addUsersCompany(formData);
+			setCompanyusers([]);
+			
 			}
 			else{
 				formData.append('delcompanyusers', JSON.stringify(delcompany));

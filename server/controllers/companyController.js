@@ -7,6 +7,7 @@ const {
   CompanyUsers,
 } = require('../models/models');
 const ApiError = require('../error/ApiError');
+const { Op } = require('sequelize');
 
 class CompanyController {
   async create(req, res, next) {
@@ -79,16 +80,27 @@ class CompanyController {
 						return next(ApiError.badRequest('Некорренктный email или password'));
 					}
 			
-					const candidate =  await CompanyUsers.findOne({ where: {'email':i.email}  });
+					const candidate =  await CompanyUsers.findOne({ where: {email:i.email,companyId:companyId}  });
 					if (candidate) {
 						return next(
-							ApiError.badRequest('Пользователь с таким email уже существует')
+							ApiError.badRequest(`Пользователь ${i.email} уже добавлен в вашу компанию`)
+						);
+					}
+					
+					const candidate2 =  await CompanyUsers.findOne({ where: {email:i.email,companyId:{ [Op.ne]: companyId }}  });
+					if (candidate2) {
+						return next(
+							ApiError.badRequest(`Пользователь ${i.email} находится в другой компании`)
 						);
 					}
           CompanyUsers.create({
             email: i.email,
             companyId: companyId,
           });
+					 const condidateT = User.findOne({ where: {email: i.email}});
+				if(condidateT!==null)
+				User.update({companyId:companyId }, { where: { email: i.email} });
+					
         });
 
       return;
@@ -116,7 +128,13 @@ class CompanyController {
 			let { delcompanyusers,companyId } = req.body;
 			
 			delcompanyusers = JSON.parse(delcompanyusers);
-			delcompanyusers.forEach((i)=> CompanyUsers.destroy({ where: { email: i.email,companyId:companyId } }))
+			delcompanyusers.forEach((i)=> {
+				CompanyUsers.destroy({ where: { email: i.email,companyId:companyId } });
+				const condidate = User.findOne({ where: {email: i.email}});
+				if(condidate!==null)
+				User.update({companyId:null }, { where: { email: i.email} });
+		})
+			
 			return;
 
     } catch (e) {

@@ -1,4 +1,4 @@
-import { ADMIN_ROUTE, BALANCE_ROUTE, COMPANY_ROUTE, HOMEPAGE_ROUTE } from '../../utils/consts';
+import { ADMIN_ROUTE, BALANCE_ROUTE, COMPANY_ROUTE, GRAPH_ROUTE, HOMEPAGE_ROUTE } from '../../utils/consts';
 
 const Imgs = [
 		{
@@ -19,6 +19,11 @@ const Imgs = [
 		{
 			path: BALANCE_ROUTE,
 			img:require ('../../icons/balancepage.jpg'),
+			alt: 'B',
+		},
+		{
+			path: GRAPH_ROUTE,
+			img:require ('../../icons/factorypage.jpg'),
 			alt: 'B',
 		},
 	];

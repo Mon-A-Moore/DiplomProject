@@ -1,20 +1,20 @@
 import {$authHost, $host} from "./index";
 
 
-export const balanceCalculationCompany = async (file) => {
+export const balanceCalculationCompany = async (file,factoryId) => {
 	//console.log(file);
-	const {data} = await $host.post('api/balance/balanceCalculation',file, {headers:{'Content-Type': 'application/json'}})
+	const {data} = await $host.post('api/balance/balanceCalculation/'+ factoryId, file, {headers:{'Content-Type': 'application/json'}})
 	
 	return data;
 }
 
-export const fetchOnebalanceCalculationCompany = async (companyId,id) => {
-	const {data} = await $host.get('api/balance/' + companyId+'/'+id)
+export const fetchOnebalanceCalculationCompany = async (factoryId,id) => {
+	const {data} = await $host.get('api/balance/' + factoryId+'/'+id)
 
 	return data
 }
-export const fetchAllbalanceCalculationCompany = async (companyId,id) => {
-	const {data} = await $host.get('api/balance/' + companyId)
+export const fetchAllbalanceCalculationCompany = async (factoryId) => {
+	const {data} = await $host.get('api/balance/' + factoryId)
 	return data
 }
 export const updateOneBalanceCalculationCompany = async (input) => {
@@ -22,8 +22,8 @@ export const updateOneBalanceCalculationCompany = async (input) => {
 	const {data} = await $host.put('api/balance/update',input)
 	return data
 }
-export const getSortBalance = async (companyId,dataStart,dataEnd) => {
+export const getSortBalance = async (factoryId,dataStart,dataEnd) => {
 	//console.log(input);
-		const {data} = await $host.get('api/balance/' + companyId+'/'+dataStart+'/'+dataEnd)
+		const {data} = await $host.get('api/balance/' + factoryId+'/'+dataStart+'/'+dataEnd)
 		return data
 }

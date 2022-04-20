@@ -1,14 +1,14 @@
-import React, { useState } from 'react';
+import React from 'react';
 import style from './admin.module.scss';
 import { balanceCalculationCompany, fetchAllbalanceCalculationCompany, fetchOnebalanceCalculationCompany, getSortBalance, updateOneBalanceCalculationCompany } from '../../http/balanceAPI';
-import Graph from '../../components/Graph/Graph';
+
+import { deleteFactory } from '../../http/factoryAPI';
 
 
 
 const Admin = () => {
 
 const arbys={
-	"companyId":localStorage.companyId,
 	"balanceSettings": {
 		"balanceSettingsConstraints": 0
 	},
@@ -123,40 +123,50 @@ const arbys={
 //console.log(arbys);
 //рассчёт баланса
 const Calculation=async()=>{
-	const temp = await balanceCalculationCompany(JSON.stringify(arbys));
+	const factoryId=1;
+	const temp = await balanceCalculationCompany(JSON.stringify(arbys),factoryId);
 console.log(temp);
 }
 //получение баланса по id
 const GetOneBalance=async()=>{
 	const id =1;
-
-const tempo = await fetchOnebalanceCalculationCompany(localStorage.companyId,id)
+	const factoryId=1;
+const tempo = await fetchOnebalanceCalculationCompany(factoryId,id)
 console.log(tempo);
 
 }
 //получение всех балансов
 const GetAllBalance=async()=>{
-	const all =await fetchAllbalanceCalculationCompany(localStorage.companyId)
+	const factoryId=1;
+	const all =await fetchAllbalanceCalculationCompany(factoryId)
 	console.log(all);
 }
 //обновление баланса(когда изменяешь входные данные и нажимаешь на кнопку пересчитать)
 const UpdateBalance=async()=>{
-	const b = await updateOneBalanceCalculationCompany(await fetchOnebalanceCalculationCompany(localStorage.companyId,1)); 
+	const factoryId=1;
+	const id =1;
+	const b = await updateOneBalanceCalculationCompany(await fetchOnebalanceCalculationCompany(factoryId,id)); 
 	console.log(b);
 }
 //список балансов за промежуток времени
 const DateSortBalance=async()=>{
+	const factoryId=1;
 	let a = new Date("2017-01-26");//старт
 	let b = new Date("2022-05-28");//конец
-	const c = await getSortBalance(localStorage.companyId,a,b); 
+	const c = await getSortBalance(factoryId,a,b); 
 	console.log(c);
 }
+
+const DeleteFactory=async()=>{
+	const factoryId=1;
+await deleteFactory(factoryId); 
+}
+
+
+
   return (
     <div className={style.container}>
       <div className={style.block}>
-				<div className={style.wrapper}>
-			<Graph/>
-			<div>
 
 				<button className={style.edit} onClick={() => Calculation()}>
           Рассчитать Тестовый баланс
@@ -165,7 +175,7 @@ const DateSortBalance=async()=>{
           Получить баланс id=1
         </button>
 				<button className={style.edit} onClick={() => GetAllBalance()}>
-          Получить баланс вашей компании с ID = {localStorage.companyId}
+          Получить баланс фабрики id =1 вашей компании с ID = {localStorage.companyId}
         </button>
 				<button className={style.edit} onClick={() => UpdateBalance()}>
           Обновить расчёт баланса, например id = 1
@@ -173,13 +183,11 @@ const DateSortBalance=async()=>{
 				<button className={style.edit} onClick={() => DateSortBalance()}>
           получить отсортированный баланс
         </button>
+				<button className={style.edit} onClick={() => DeleteFactory()}>
+          Удалить факторию id = 1
+        </button>
 				</div>
 				</div>
-      </div>
-
-
-
-    </div>
   );
 };
 
