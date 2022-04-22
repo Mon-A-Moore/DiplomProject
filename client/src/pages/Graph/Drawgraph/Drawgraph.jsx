@@ -6,106 +6,50 @@ import popper from 'cytoscape-popper';
 //import classNames from 'classnames'
 cytoscape.use( popper );
 
-const Drawgraph = ({aaa}) => {
-	console.log("aaa");
-console.log(aaa);
-/* 	const [balanceOutputVariables, setState] = useState([]);
-	const [kkk, setKkk] = useState([]);
-	useEffect(() => {
-		if(aaa!==null){
-			setKkk(aaa.calculation_output.balanceOutputVariables);
-		}
-	}, [aaa]); */
+const Drawgraph = ({graphsel}) => {
+	console.log("graphsel");
+console.log(graphsel);
 
-	const [balanceOutputVariables, setState] = useState([]);
-	useEffect(() => {
-		if(aaa!==null){
-			setState(aaa.calculation_output.balanceOutputVariables)
-		}
-	}, [aaa]);
-
-	/* 
-const	balanceOutputVariables= [
-    {
-      id: "00000000-0000-0000-0000-000000000001",
-      source: "NULL",
-      target: "00000000-0000-0000-0000-000000000001",
-      name: "X1",
-      value: 10.055612418500504,
-      upperBound: 1000,
-      lowerBound: 0
-    },
-    {
-      id: "00000000-0000-0000-0000-000000000002",
-      source: "00000000-0000-0000-0000-000000000001",
-      target: "NULL",
-      name: "X2",
-      value: 3.0144745895183522,
-      upperBound: 1000,
-      lowerBound: 0
-    },
-    {
-      id: "00000000-0000-0000-0000-000000000003",
-      source: "00000000-0000-0000-0000-000000000001",
-      target: "00000000-0000-0000-0000-000000000002",
-      name: "X3",
-      value: 7.041137828982151,
-      upperBound: 1000,
-      lowerBound: 0
-    },
-    {
-      id: "00000000-0000-0000-0000-000000000004",
-      source: "00000000-0000-0000-0000-000000000002",
-      target: "NULL",
-      name: "X4",
-      value: 1.9822547563048074,
-      upperBound: 1000,
-      lowerBound: 0
-    },
-    {
-      id: "00000000-0000-0000-0000-000000000005",
-      source: "00000000-0000-0000-0000-000000000002",
-      target: "00000000-0000-0000-0000-000000000003",
-      name: "X5",
-      value: 5.058883072677343,
-      upperBound: 1000,
-      lowerBound: 0
-    },
-    {
-      id: "00000000-0000-0000-0000-000000000006",
-      source: "00000000-0000-0000-0000-000000000003",
-      target: "NULL",
-      name: "X6",
-      value: 4.067257698582969,
-      upperBound: 1000,
-      lowerBound: 0
-    },
-    {
-      id: "00000000-0000-0000-0000-000000000007",
-      source: "00000000-0000-0000-0000-000000000003",
-      target: "NULL",
-      name: "X7",
-      value: 0.9916253740943739,
-      upperBound: 1000,
-      lowerBound: 0
-    }
-  ]
-
- */
-
-
-
+	const [balance, setBalance] = useState([]);
 
 
 
 useEffect(() => {
-/* 	setState(kkk); */
-	const nods=[],edgs=[];
+	if(graphsel!==null){
+		setBalance(graphsel.calculation_output.balanceOutputVariables)
+	}
+/* 	
+добавить стрелки dashed где из 0 или в 0 уходит
+
+
+"isMeasured": true,  если измеряемый - то задник зелёный, если нет - красный 
+
+это в отдельное поле div вывести слева наверху
+  "calculationTime": 0.0203991,
+  "disbalanceOriginal": 0.29433993952571247,
+  "disbalance": 1.4390135079995448e-15,
+	
+	
+	справа внизу убирающуюся стрелкой - легенду(карту знаков) - */
+	const nods=[
+				{ data: { id: 'a'} },
+				{ data: { id: 'b', name:'1'} },
+				{ data: { id: 'd',name:'4' , type: "cut-rectangle" } },
+				{ data: { id: 'e',nod:'true'  },grabbable: false, },
+				{ data: { id: 'c',
+				data:"name: X1,\n measured: 10.005,\n correction: 0,\n 	technologicUpperBound: 1000.0,\n technologicLowerBound: 0.0,\n	tolerance: 0.2, \n value: 3.0144745895183522, ",
+
+				 type: "cut-rectangle",parent: "e"  },grabbable: false,},
+	],edgs=[
+		{ data: { id: 'ab', source: 'a', target: 'b'} },
+		{ data: { id: 'bd', source: 'b', target: 'd', arrow:"triangle" } },
+
+	];
 	let chetchik=1;
-	balanceOutputVariables.forEach((item)=>{
+/* 	balanceOutputVariables.forEach((item)=>{
 		if(item.target!=="NULL" && item.source!=="NULL")
 		{
-			/* console.log(item) */
+
 		edgs.push({data: { id: `0-${item.id}`, source: item.source, target: item.target,label: item.name } });
 		const a= item.source;
 		const aa= nods.find(item =>item.data.id ===a);
@@ -137,7 +81,7 @@ useEffect(() => {
 			}
 		}
 
-	})
+	}) */
 /* 	console.log(nods)
 	console.log('fffffffffff')
 	console.log(edgs) */
@@ -150,28 +94,81 @@ useEffect(() => {
 					"curve-style": "straight",
  					'width': 3,
 					'line-color': '#369',
-					'target-arrow-color': '#369',
-					'target-arrow-shape': 'triangle',
-					'label': 'data(label)',
 					'font-size': '14px',
 					'color': '#777' ,
 					'text-margin-y': -15,
+					"z-index-compare": "manual",
+					"z-index": 11
+				})
+				.selector('edge[arrow]')
+				.css({
+
+					"curve-style": "straight",
+ 					'width': 3,
+					'line-color': '#369',
+					'target-arrow-color': '#369',
+					'target-arrow-shape': 'data(arrow)',
+					'font-size': '14px',
+					'color': '#777' ,
+					'text-margin-y': -15,
+					/* "line-style" : "dashed" */
+					"z-index-compare": "manual",
+					"z-index": 11
 				})
 
 			.selector('node')
 				.css({
 					'background-color': 'white' 
 				})
+				.selector('node[nod]')
+				.css({
+					'background-color': '#369', 
+					'label': 'X1',
+					"shape": "barrel",
+					"z-index-compare": "manual",
+					"z-index": 111
+				})
+
+/* 					.selector(':parent')
+					.css({
+						'text-valign': 'top',
+						'text-halign': 'center',
+					}) */
+
 				.selector('node[name]')
 				.css({
 				"text-valign": "center",//высота надписи по вертикали
     		"text-halign": "center", // надписи по горизонтали
- 
-				'content': 'data(name)',
+				"width":50,
+				"height":50,
+				'label': 'data(name)',
+					'color': 'white',
+					'text-outline-width': 1,
+					'text-outline-color': '#888',
+					'background-color': '#888',
+					"z-index-compare": "manual",
+					"z-index": 111
+				})
+				.selector('node[data][type]')
+				.css({
+					"width":300,
+					"height":150,
+				"text-valign": "center",//высота надписи по вертикали
+    		"text-halign": "center", // надписи по горизонтали
+				"shape": "data(type)",
+				'label': 'data(data)',
+				"text-wrap": "wrap",
+				"text-justification":"left",
+				"font-style": "normal",
+				"font-weight": "normal",
 					'color': 'white',
 					'text-outline-width': 2,
 					'text-outline-color': '#888',
-					'background-color': '#888' 
+					"background-color": "#f4a582",
+					"border-width": 1.25,
+					"border-color": "#555555",
+					"z-index-compare": "manual",
+					"z-index": 111
 				})
 /* 				.selector('node[type]')
 				.css({
@@ -184,7 +181,9 @@ useEffect(() => {
 					'line-color': 'black',
 					'target-arrow-color': 'black',
 					'source-arrow-color': 'black',
-					'text-outline-color': 'black' 
+					'text-outline-color': 'black',
+					"z-index-compare": "manual",
+					"z-index": 111
 				}),
 
 
@@ -194,46 +193,95 @@ useEffect(() => {
 			edges: edgs,
 		},
 
-	/* 	elements: {
-			nodes: [
-				{ data: { id: 'a',name:'1' } },
-				{ data: { id: 'b',name:'2' } },
-				{ data: { id: 'c',name:'3' } },
-				{ data: { id: 'd',name:'4' } },
-				{ data: { id: 'e',name:'5' } },
-			],
-			edges: [
-				{ data: { id: 'ab', source: 'a', target: 'b',label: "X1" } },
-				{ data: { id: 'bc', source: 'b', target: 'c',label: "X1" } },
-				{ data: { id: 'ce', source: 'c', target: 'e',label: "X1" } },
-				{ data: { id: 'dd', source: 'a', target: 'd',label: "X1" } },
-				
-			]
-		}, */
+
 
 		layout: {
 			name: 'breadthfirst',
-		/* 	name: 'breadthfirst', */
+
 		}
+		
 	});
 
-/* 	cy.add([
-		{ group: 'nodes',data: { id: 'n1', name:'n11' }},
-		{ group: 'nodes',data: { id: 'n2' }},
-		{ group: 'nodes',data: { id: 'n3' }},
-		{ group: 'nodes',data: { id: 'n4' }},
+/* 	let e= cy.getElementById('e'); */
 
-		{ group: 'edges',data: { id: 'e0', source: 'n1', target: 'n2', arrow: "triangle-backcurve", label: 7 } },
-		{ group: 'edges',data: { id: 'e1', source: 'n2', target: 'n3', arrow: "triangle-backcurve",label: 10 } },
-		{ group: 'edges',data: { id: 'e2', source: 'n3', target: 'n4', arrow: "triangle-backcurve",label: 11 } },
-
-]);  */
+/* let coords=Math.sqrt(Math.pow(pos2.x-pos1.x,2)+Math.pow(pos2.y-pos1.y,2)); */
 
 
-/* 	var a = 
-cy.getElementById('a'); */
+/* 	console.log(pos1)
+console.log(pos2)
+console.log(coords) */
 
 
+
+
+var updateAB = function(){
+	var pos1 = cy.$('#b').position();
+	var pos2 = cy.$('#d').position();
+	let x= pos2.x-(pos2.x-pos1.x)/2;
+let y= pos2.y-(pos2.y-pos1.y)/2;
+let coords={x:x,y:y};
+cy.$('#e').position(coords);
+};
+
+cy.$('#bd').connectedNodes().on('position', updateAB);
+cy.on('pan zoom resize', updateAB);
+
+/* let updateAB = function(){
+	popperAB.update();
+};
+
+variable.connectedNodes().on('position', updateAB);
+cy.on('pan zoom resize', updateAB); */
+
+
+/* 
+var ab = cy.getElementById('bd');
+
+var makeDiv = function(text){
+	var div = document.createElement('div');
+
+	div.classList.add('popper-div');
+
+	div.innerHTML = text;
+
+	document.body.appendChild( div );
+
+	return div;
+};
+			var popperAB = ab.popper({
+				content: function(){ return makeDiv('Sticky position div'); }
+			});
+
+			var updateAB = function(){
+				popperAB.update();
+			};
+
+			ab.connectedNodes().on('position', updateAB);
+			cy.on('pan zoom resize', updateAB);
+
+
+
+ */
+
+
+
+
+
+
+
+/* 	let variable= cy.getElementById('bd');
+	let updateAB = function(){
+		e.update();
+	};
+
+	variable.connectedNodes().('position', updateAB);
+	cy.on('pan zoom resize', updateAB); */
+
+/* 	let x = cy.$('#a').position('x');
+console.log(x)
+let y = cy.$('#a').position('y'); */
+
+/* 
 const makeDiv =(text)=>{
 	let div = document.createElement('div');
 
@@ -272,151 +320,9 @@ let divWrapper = document.getElementById('divWrapper');
 		cy.on('pan zoom resize', updateAB);
 	
 	
-	})
+	}) */
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-/* 	var popperA = a.popper({
-		content: function(){ return makeDiv('div прилипший'); }
-	});
-
-	var updateA = function(){
-		popperA.update();
-	};
-
-	a.on('position', updateA);
-	cy.on('pan zoom resize', updateA); */
-
-
-
-
-/* 	var popperB = b.popper({
-		content: function(){ return makeDiv('статичный див'); }
-	}); */
-
-
-
-
-
-
-
-
-
-
-
-
-/* 	let cy = cytoscape({
-		container: document.getElementById('cy'), // container to render in
-	
-		elements: [	],
-	
-		style: cytoscape.stylesheet()
-		.selector('edge')
-				.css({
-
-					"curve-style": "straight",
- 					'width': 3,
-					'line-color': '#369',
-					'target-arrow-color': '#369',
-					'target-arrow-shape': 'triangle',
-					'label': 'data(label)',
-					'font-size': '14px',
-					'color': '#777' 
-				})
-		.selector('edge[arrow]')
-				.css({
-					"target-arrow-shape": "data(arrow)"
-				})
-			.selector('node')
-				.css({
-				"text-valign": "center",//высота надписи по вертикали
-    		"text-halign": "center", // надписи по горизонтали
- 
-				'content': 'data(id)',
-					'color': 'white',
-					'text-outline-width': 2,
-					'text-outline-color': '#888',
-					'background-color': '#888' 
-				})
-
-				.selector('node[type]')
-				.css({
-					"label": "data(type)"
-				})
-			.selector(':selected')
-				.css({
- 				'background-color': 'black',
-					'line-color': 'black',
-					'target-arrow-color': 'black',
-					'source-arrow-color': 'black',
-					'text-outline-color': 'black' 
-				}),
-	
-		layout: {
-			name: 'grid',
-			row: 1
-		}
-	
-	});
-
- 	cy.add([
-			{ group: 'nodes',data: { id: 'n1', name:'n11' },type: "triangle-backcurve", position: { x: 50, y: 200 } },
-			{ group: 'nodes',data: { id: 'n2' }, type: "triangle-backcurve", position: { x: 131, y: 226 } },
-			{ group: 'nodes',data: { id: 'n3' }, type: "triangle-backcurve", position: { x: 128, y: 143 } },
-			{ group: 'nodes',data: { id: 'n4' }, type: "triangle-backcurve", position: { x: 249, y: 142 } },
-			{ group: 'nodes',data: { id: 'n5' },  type: "triangle-backcurve",position: { x: 191, y: 62 } },
-			{ group: 'nodes',data: { id: 'n6' },  type: "triangle-backcurve",position: { x: 66, y: 83 } },
-			{ group: 'edges',data: { id: 'e0', source: 'n1', target: 'n2', arrow: "triangle-backcurve", label: 7 } },
-			{ group: 'edges',data: { id: 'e1', source: 'n2', target: 'n3', arrow: "triangle-backcurve",label: 10 } },
-			{ group: 'edges',data: { id: 'e2', source: 'n1', target: 'n6', arrow: "triangle-backcurve",label: 14 } },
-			{ group: 'edges',data: { id: 'e3', source: 'n1', target: 'n3', arrow: "triangle-backcurve",label: 9 } },
-			{ group: 'edges',data: { id: 'e4', source: 'n2', target: 'n4', arrow: "triangle-backcurve",label: 15 } },
-			{ group: 'edges',data: { id: 'e5', source: 'n3', target: 'n4', arrow: "triangle-backcurve",label: 11 } },
-			{ group: 'edges',data: { id: 'e6', source: 'n3', target: 'n6', arrow: "triangle-backcurve",label: 2 } },
-			{ group: 'edges',data: { id: 'e7', source: 'n6', target: 'n5', arrow: "triangle-backcurve",label: 9 } },  
-			{ group: 'edges',data: { id: 'e8', source: 'n5', target: 'n4', arrow: "triangle-backcurve",label: 6 } },
-	]); 
-
- */
-
-
-
-/* let node = cy.nodes()[1];//id ноды
-
-let popper = node.popper({
-  content: () => {
-    let div = document.createElement('div');
-
-    div.innerHTML = 'Какой-то контент';
-
-    document.body.appendChild( div );
-
-    return div;
-  }
-});
-
-let update = () => {
-  popper.update();
-};
-
-node.on('position', update);
-
-cy.on('pan zoom resize', update);
-	 */
-
-
-}, [aaa]); 
+}, [graphsel,balance]); 
 
 
 	

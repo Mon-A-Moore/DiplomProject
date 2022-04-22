@@ -43,7 +43,7 @@ useEffect(() => {
 		console.log(balances)
 		balances.forEach(item=>{
 		
-			if(item.id==balanceSelect)
+			if(item.id===Number(balanceSelect))
 			{
 				/* console.log(item) */
 			setGraphsel(item)
@@ -53,14 +53,19 @@ useEffect(() => {
 	
 	console.log(graphsel)
 	}
-}, [balanceSelect]);
+}, [balanceSelect,balances,graphsel]);
+
+
+
+
+
   return (
     <div className={style.container}>
 			{/* <h1 className={style.title}>Графическое представление балансов компании "название, пробел, логотип"</h1> */}
 
-			<Drawgraph aaa={graphsel}/>
-				<div className={style.svgDiv}>
-				<svg  className={classNames(style.svg,menuActive? style.svgActive:style.svgUnActive)} viewBox="0 0 17 30" xmlns="http://www.w3.org/2000/svg" onClick={()=>setMenuActive(!menuActive)}>
+			<Drawgraph graphsel={graphsel}/>
+				<div className={style.menu_svgDiv}>
+				<svg   className={classNames(style.menu_svg,menuActive? style.menu_svgActive:style.menu_svgUnActive)} viewBox="0 0 17 30" xmlns="http://www.w3.org/2000/svg" onClick={()=>setMenuActive(!menuActive)}>
 			<g fill="#000" fill-rule="evenodd">
 				<path d="M.3619 2.7864c.404-.469 1.883-.469 2.288 0 .476.552.309 7.271.309 12.526 0 5.81.095 11.595-.274 11.98-.442.46-1.941.483-2.358 0-.38-.44-.324-6.124-.324-11.91 0-5.467-.032-12.143.359-12.596"></path>
 				<path d="M7.2867.3518c.404-.469 1.883-.469 2.288 0 .476.552.347 7.782.419 12.673.083 5.751.365 11.047-.092 11.799-.367.605-2.489.664-2.852.041-.365-.625-.339-6.15-.196-11.934.144-5.862.042-12.126.433-12.579"></path>
@@ -68,7 +73,6 @@ useEffect(() => {
 			</g>
 		</svg>
 				</div>
-
 				<div className={classNames(style.menu,menuActive? style.menu_unactive:style.menu_active)}>
 
 				<label for="model-select">Модель</label>
@@ -113,42 +117,26 @@ useEffect(() => {
   <span className={style.focus}></span>
 </div>
 
+				</div>
 
 
 
-
-
-{/* 
-				<select className={style.graphModelSelecter} onChange={e=>setFactory(e.target.value)}>
-					{factories.map((item)=>(
-						<option value={item.id}>{item.name}</option>
-					))}
-
-      </select> */}
-
-{/* 				<div className={style.graphData}>
-				<input
-                        className={style.input}                                    
-                        type="date"
-												
-												onChange={(e) => setStartDate(e.target.value)}
-                      />
-				<input
-                        className={style.input}                                    
-                        type="date"
-												onChange={(e) => setEndDate(e.target.value)}
-                      />
-				</div> */}
-
-{/* 				<select className={style.balanceList} onChange={e=>setBalanceSelect(e.target.value)}>
-					{balances.map((item)=>(
-						<option value={item.id}>{item.id}</option>
-					))}
-
-      </select> */}
-
+<div className={style.menuResult_svgDiv}>
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+viewBox="0 0 50 50" enable-background="new 0 0 50 50" xmlSpace="preserve">
+	<path fill="#231F20" d="M23.563,40.836c0.195,0.195,0.451,0.293,0.707,0.293s0.512-0.098,0.707-0.293l15-15
+c0.391-0.391,0.391-1.023,0-1.414l-15-15c-0.391-0.391-1.023-0.391-1.414,0s-0.391,1.023,0,1.414l14.293,14.293L23.563,39.422
+C23.172,39.813,23.172,40.446,23.563,40.836z"/>
+<path fill="#231F20" d="M15.563,40.836c0.195,0.195,0.451,0.293,0.707,0.293s0.512-0.098,0.707-0.293l15-15
+c0.391-0.391,0.391-1.023,0-1.414l-15-15c-0.391-0.391-1.023-0.391-1.414,0s-0.391,1.023,0,1.414l14.293,14.293L15.563,39.422
+C15.172,39.813,15.172,40.446,15.563,40.836z"/>
+<path fill="#231F20" d="M7.563,40.836c0.195,0.195,0.451,0.293,0.707,0.293s0.512-0.098,0.707-0.293l15-15
+c0.391-0.391,0.391-1.023,0-1.414l-15-15c-0.391-0.391-1.023-0.391-1.414,0s-0.391,1.023,0,1.414l14.293,14.293L7.563,39.422
+C7.172,39.813,7.172,40.446,7.563,40.836z"/>
+</svg>
 
 				</div>
+				<div className={style.menuResult}></div>
       </div>
   );
 };
