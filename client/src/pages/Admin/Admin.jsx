@@ -129,7 +129,7 @@ console.log(temp);
 }
 //получение баланса по id
 const GetOneBalance=async()=>{
-	const id =1;
+	const id =6;
 	const factoryId=1;
 const tempo = await fetchOnebalanceCalculationCompany(factoryId,id)
 console.log(tempo);
@@ -144,7 +144,7 @@ const GetAllBalance=async()=>{
 //обновление баланса(когда изменяешь входные данные и нажимаешь на кнопку пересчитать)
 const UpdateBalance=async()=>{
 	const factoryId=1;
-	const id =1;
+	const id =6;
 	const b = await updateOneBalanceCalculationCompany(await fetchOnebalanceCalculationCompany(factoryId,id)); 
 	console.log(b);
 }
@@ -172,7 +172,7 @@ await deleteFactory(factoryId);
           Рассчитать Тестовый баланс
         </button>
 				<button className={style.edit} onClick={() => GetOneBalance()}>
-          Получить баланс id=1
+          Получить баланс id=6
         </button>
 				<button className={style.edit} onClick={() => GetAllBalance()}>
           Получить баланс фабрики id =1 вашей компании с ID = {localStorage.companyId}
@@ -184,7 +184,7 @@ await deleteFactory(factoryId);
           получить отсортированный баланс
         </button>
 				<button className={style.edit} onClick={() => DeleteFactory()}>
-          Удалить факторию id = 1
+          Удалить факторию id = 6
         </button>
 				</div>
 				</div>

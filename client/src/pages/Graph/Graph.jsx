@@ -10,7 +10,8 @@ import Drawgraph from './Drawgraph/Drawgraph';
 
 const Graph = () => {
 
-const [menuActive,setMenuActive]=useState(true)
+const [menuActive,setMenuActive]=useState(false)
+const [menuResultActive,setMenuResultActive]=useState(false)
 
 
 
@@ -20,7 +21,7 @@ const [factory, setFactory] = useState(null);
 const [factories, setFactories] = useState([]);
 useEffect(() => {
 	getAllFactory(localStorage.companyId).then(data => (
-		console.log(data),
+/* 		console.log(data), */
 		setFactories(data)));
 }, []);
 
@@ -32,7 +33,6 @@ const [balanceSelect, setBalanceSelect] = useState(null);
 useEffect(() => {
 	if(factory!==null && startDate!==null && endDate!==null)
 	getSortBalance(factory,startDate,endDate).then(data => (
-		 console.log(data), 
 		 setBalances(data)));
 }, [factory,startDate,endDate]);
 
@@ -40,22 +40,37 @@ useEffect(() => {
 const [graphsel, setGraphsel] = useState(null);
 useEffect(() => {
 	if(balanceSelect!==null){
-		console.log(balances)
+/* 		console.log(balances);
+		console.log(balances); */
+/* 		console.log(balances); 
+		console.log(balanceSelect); */
 		balances.forEach(item=>{
 		
 			if(item.id===Number(balanceSelect))
 			{
-				/* console.log(item) */
+				
 			setGraphsel(item)
+			/* console.log(item); */
 			}
 		})
 		/* setGraphsel(balances.forEach.find(item => item.id === balanceSelect )); */
 	
-	console.log(graphsel)
+/* 	console.log(graphsel) */
 	}
-}, [balanceSelect,balances,graphsel]);
+}, [balanceSelect,balances]);
 
 
+useEffect(() => {
+ 
+document.getElementById("menuResult_svgDiv").style.marginLeft+=window.getComputedStyle(document.getElementById("sidebar")).width;
+document.getElementById("menuResult").style.marginLeft=window.getComputedStyle(document.getElementById("sidebar")).width;
+
+}, [])
+
+const [arrow, setArrow] = useState(0);
+useEffect(() => {
+	menuResultActive? setArrow('rotate(0)'):setArrow('rotate(180 25.3092098236084,16)')
+	}, [menuResultActive])
 
 
 
@@ -121,22 +136,30 @@ useEffect(() => {
 
 
 
-<div className={style.menuResult_svgDiv}>
-<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-viewBox="0 0 50 50" enable-background="new 0 0 50 50" xmlSpace="preserve">
-	<path fill="#231F20" d="M23.563,40.836c0.195,0.195,0.451,0.293,0.707,0.293s0.512-0.098,0.707-0.293l15-15
-c0.391-0.391,0.391-1.023,0-1.414l-15-15c-0.391-0.391-1.023-0.391-1.414,0s-0.391,1.023,0,1.414l14.293,14.293L23.563,39.422
-C23.172,39.813,23.172,40.446,23.563,40.836z"/>
-<path fill="#231F20" d="M15.563,40.836c0.195,0.195,0.451,0.293,0.707,0.293s0.512-0.098,0.707-0.293l15-15
-c0.391-0.391,0.391-1.023,0-1.414l-15-15c-0.391-0.391-1.023-0.391-1.414,0s-0.391,1.023,0,1.414l14.293,14.293L15.563,39.422
-C15.172,39.813,15.172,40.446,15.563,40.836z"/>
-<path fill="#231F20" d="M7.563,40.836c0.195,0.195,0.451,0.293,0.707,0.293s0.512-0.098,0.707-0.293l15-15
-c0.391-0.391,0.391-1.023,0-1.414l-15-15c-0.391-0.391-1.023-0.391-1.414,0s-0.391,1.023,0,1.414l14.293,14.293L7.563,39.422
-C7.172,39.813,7.172,40.446,7.563,40.836z"/>
+<div  id="menuResult_svgDiv" className={style.menuResult_svgDiv}>
+<svg version="1.1" className={classNames(style.menuResult_svg,menuResultActive? style.menuResult_svgActive:style.menuResult_svgUnActive)}  xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" x="-1px" y="-1px" onClick={()=>setMenuResultActive(!menuResultActive)}
+viewBox="0 -5 40 40"  xmlSpace="preserve">
+	<g fill="#000" fill-rule="evenodd" transform={arrow}>
+<path  d="m24.506476,14.996676l-13.494287,-14.180636c-0.525701,-0.552439 -1.379965,-0.552439 -1.905666,0c-0.52957,0.556495 -0.52957,1.454218 0,2.006658l12.539525,13.177301l-12.539525,13.177312c-0.52957,0.552439 -0.52957,1.450152 0,2.006647c0.262856,0.276225 0.606875,0.414333 0.954763,0.414333c0.344028,0 0.688057,-0.138108 0.950903,-0.414333l13.494287,-14.180635c0.255117,-0.268093 0.398137,-0.62961 0.398137,-1.003324c0,-0.37777 -0.14302,-0.73523 -0.398137,-1.003323zm0,0"/>
+<path  d="m33.398552,14.996676l-13.494287,-14.180636c-0.525701,-0.552439 -1.379965,-0.552439 -1.905666,0c-0.52957,0.556495 -0.52957,1.454218 0,2.006658l12.539525,13.177301l-12.539525,13.177312c-0.52957,0.552439 -0.52957,1.450152 0,2.006647c0.262856,0.276225 0.606875,0.414333 0.954763,0.414333c0.344028,0 0.688057,-0.138108 0.950903,-0.414333l13.494287,-14.180635c0.255117,-0.268093 0.398137,-0.62961 0.398137,-1.003324c0,-0.37777 -0.14302,-0.73523 -0.398137,-1.003323zm0,0"/>
+<path  d="m41.510936,14.996676l-13.494287,-14.180635c-0.525701,-0.552439 -1.379964,-0.552439 -1.905666,0c-0.52957,0.556495 -0.52957,1.454218 0,2.006658l12.539525,13.177301l-12.539525,13.177312c-0.52957,0.552439 -0.52957,1.450152 0,2.006647c0.262856,0.276225 0.606874,0.414332 0.954762,0.414332c0.344029,0 0.688058,-0.138107 0.950903,-0.414332l13.494287,-14.180635c0.255117,-0.268093 0.398138,-0.629609 0.398138,-1.003324c0,-0.37777 -0.14302,-0.735231 -0.398138,-1.003324zm0,0"/>
+</g>
 </svg>
-
 				</div>
-				<div className={style.menuResult}></div>
+
+				<div  id="menuResult" className={classNames(style.menuResult,menuResultActive? style.menuResult_unactive:style.menuResult_active)}>
+
+				<div   className={style.menuResult_item}>
+				calculationTime:<br/>{graphsel!=null? graphsel.calculation_output.calculationTime :"null"}
+				</div>
+				<div   className={style.menuResult_item}>
+				disbalanceOriginal:<br/>{graphsel!=null? graphsel.calculation_output.disbalanceOriginal :'null'} 
+				</div>
+				<div   className={style.menuResult_item}>
+				disbalance:<br/>{graphsel!=null? graphsel.calculation_output.disbalance : 'null'} 
+				</div>
+				</div>
+				
       </div>
   );
 };

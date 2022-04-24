@@ -19,6 +19,7 @@ const SideBar = observer(() => {
     <>
       {state.user && !isHomepage ? (
         <div
+				id="sidebar"
           className={style.container}>
           {IMAGES.map((item) => (
               <button className={style.button}>

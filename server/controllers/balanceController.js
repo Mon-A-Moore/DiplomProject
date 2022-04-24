@@ -101,6 +101,7 @@ class BalanceController {
     try {
       const { factoryId, id } = req.params;
 
+
       const balance = await BalanceCalculation.findOne({
         where: { id: id, factoryId: factoryId },
         include: [
@@ -122,7 +123,7 @@ class BalanceController {
           },
         ],
       });
-
+			console.info(balance)
       return res.json(balance);
     } catch (e) {
       next(ApiError.badRequest(e.message));
@@ -134,6 +135,7 @@ class BalanceController {
       console.info('fffffffffffffffffffffffffffffff');
       const { calculation_input,calculation_output } = req.body;
       const balance = req.body;
+			const result = await AccordSolver(JSON.stringify(calculation_input));
 
       await СalculationBalanceSettings.update(
         {
@@ -180,7 +182,7 @@ class BalanceController {
         )
       );
 
-      const result = await AccordSolver(JSON.stringify(calculation_input));
+      
 
 
 			//await	СalculationOutput.destroy({ where: { balanceCalculationId: calculation_output.balanceCalculationId }});
@@ -256,6 +258,8 @@ class BalanceController {
     try {
 			const {factoryId} = req.params;
       let input = req.body;
+			const result = await AccordSolver(JSON.stringify(input));
+			
       const balancecalculation = await BalanceCalculation.create({
         factoryId: factoryId,
       });
@@ -291,7 +295,7 @@ class BalanceController {
       console.info(
         '......................................................................................'
       );
-      const result = await AccordSolver(JSON.stringify(input));
+      
       //	console.info(result);
       //	console.info(result.calculationTime);
       const calculationoutput = await СalculationOutput.create({
