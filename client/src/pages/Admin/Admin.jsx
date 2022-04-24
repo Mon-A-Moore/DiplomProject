@@ -144,7 +144,7 @@ const GetAllBalance=async()=>{
 //обновление баланса(когда изменяешь входные данные и нажимаешь на кнопку пересчитать)
 const UpdateBalance=async()=>{
 	const factoryId=1;
-	const id =6;
+	const id =13;
 	const b = await updateOneBalanceCalculationCompany(await fetchOnebalanceCalculationCompany(factoryId,id)); 
 	console.log(b);
 }

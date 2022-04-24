@@ -135,7 +135,9 @@ class BalanceController {
       console.info('fffffffffffffffffffffffffffffff');
       const { calculation_input,calculation_output } = req.body;
       const balance = req.body;
-			const result = await AccordSolver(JSON.stringify(calculation_input));
+			console.info('fdfdfd');
+			console.info(calculation_input);
+			
 
       await СalculationBalanceSettings.update(
         {
@@ -183,7 +185,7 @@ class BalanceController {
       );
 
       
-
+			const result = await AccordSolver(JSON.stringify(calculation_input));
 
 			//await	СalculationOutput.destroy({ where: { balanceCalculationId: calculation_output.balanceCalculationId }});
       await СalculationOutput.update({
