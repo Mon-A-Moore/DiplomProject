@@ -95,7 +95,7 @@ graphsel.calculation_input.BalanceInputVariables.forEach((item,index)=>{
 		}
 		
 
-		nods.push({data: { id: `${nods.length}`, nod:'true',label:`${item.name}`,background: `${isMeasured}`  },grabbable: false});
+		nods.push({data: { id: `${nods.length}`, nod:'true',label:`${item.name}`,background: `${isMeasured}`, input:item.sourceId,output:item.destinationId  },grabbable: false});
 		nods.push({data: { id: `${nods.length}`, type:'cut-rectangle',parent:`${nods.length-1}`, data:`id:${item.id}\nsourceId:${item.sourceId}\ndestinationId:${item.destinationId}\nmeasured:${item.measured}\ncorrection:${item.correction}\ntechnologicUpperBound:${item.technologicUpperBound}\ntechnologicLowerBound:${item.technologicLowerBound}\ntolerance:${item.tolerance}\nvalue:${graphsel.calculation_output.balanceOutputVariables[index].value}` },grabbable: false});
 
 
@@ -108,8 +108,10 @@ graphsel.calculation_input.BalanceInputVariables.forEach((item,index)=>{
 				edgs.push({data: { id: `0-${item.id}`, source: item.sourceId, target: `${nods.length}`, arrow:"triangle",lineStyle:"dashed"} });
 				nods.push({data: { id: nods.length}});
 
-				nods.push({data: { id: `${nods.length}`, nod:'true',label:`${item.name}`,background: `${isMeasured}`  },grabbable: false});
+				nods.push({data: { id: `${nods.length}`, nod:'true',label:`${item.name}`,background: `${isMeasured}`, input:item.sourceId,output:nods.length-1   },grabbable: false});
 				nods.push({data: { id: `${nods.length}`, type:'cut-rectangle',parent:`${nods.length-1}`, data:`id:${item.id}\nsourceId:${item.sourceId}\ndestinationId:${item.destinationId}\nmeasured:${item.measured}\ncorrection:${item.correction}\ntechnologicUpperBound:${item.technologicUpperBound}\ntechnologicLowerBound:${item.technologicLowerBound}\ntolerance:${item.tolerance}\nvalue:${graphsel.calculation_output.balanceOutputVariables[index].value}` },grabbable: false});
+
+				
 				
 			}
 			if(item.sourceId==="NULL")
@@ -118,7 +120,7 @@ graphsel.calculation_input.BalanceInputVariables.forEach((item,index)=>{
 				edgs.push({data: { id: `0-${item.id}`, source: `${nods.length}`, target: item.destinationId, arrow:"triangle",lineStyle:"dashed"} });
 				nods.push({data: { id: nods.length}});
 				
-				nods.push({data: { id: `${nods.length}`, nod:'true',label:`${item.name}`,background: `${isMeasured}`  },grabbable: false});
+				nods.push({data: { id: `${nods.length}`, nod:'true',label:`${item.name}`,background: `${isMeasured}`, input:nods.length-1,output:item.destinationId   },grabbable: false});
 				nods.push({data: { id: `${nods.length}`, type:'cut-rectangle',parent:`${nods.length-1}`, data:`id:${item.id}\nsourceId:${item.sourceId}\ndestinationId:${item.destinationId}\nmeasured:${item.measured}\ncorrection:${item.correction}\ntechnologicUpperBound:${item.technologicUpperBound}\ntechnologicLowerBound:${item.technologicLowerBound}\ntolerance:${item.tolerance}\nvalue:${graphsel.calculation_output.balanceOutputVariables[index].value}` },grabbable: false});
 			}
 		}
@@ -242,6 +244,79 @@ graphsel.calculation_input.BalanceInputVariables.forEach((item,index)=>{
 		
 	});
 
+
+
+/* 
+const updateAB = function (source,target){
+	let pos1 = cy.$("#"+source).position();
+	let pos2 = cy.$("#"+target).position();
+	
+	let x= pos2.x-(pos2.x-pos1.x)/2;
+let y= pos2.y-(pos2.y-pos1.y)/2;
+let coords={x:x,y:y};
+cy.$("#"+arr[iter].data.id).position(coords);
+};
+const arr=nods.filter(item=>item.data.nod==='true');
+
+let iter=0;
+edgs.forEach((item)=>{
+
+	cy.$("#"+item.data.id).connectedNodes().on('position', updateAB(item.data.source,item.data.target));
+	cy.on('pan zoom resize', updateAB(item.data.source,item.data.target));
+	iter++;
+}) */
+
+const arr=nods.filter(item=>item.data.nod==='true');
+/* console.log(arr); */
+
+const updateAB = function (source,target,potok){
+/* 	console.log(source);
+	console.log(target);
+	console.log(potok); */
+	let pos1 = cy.$("#"+source).position();
+	let pos2 = cy.$("#"+target).position();
+	
+let x= pos2.x-(pos2.x-pos1.x)/2;
+let y= pos2.y-(pos2.y-pos1.y)/2;
+let coords={x:x,y:y};
+cy.$("#"+potok).position(coords);
+};
+
+
+console.log(edgs);
+edgs.forEach((item)=>{
+	const potok=arr.find(elem=>elem.data.input==item.data.source&&elem.data.output==item.data.target);
+	updateAB(item.data.source,item.data.target,potok.data.id);
+}) 
+
+
+
+cy.on('position', 'node[name]', function(evt){
+  const node = evt.target; 
+	node._private.edges.forEach((item)=>{
+		const source=item._private.data.source;
+		const target=item._private.data.target;
+		const potok=arr.find(elem=>elem.data.input==source&&elem.data.output==target);
+		console.log(source);
+		console.log(target);
+		console.log(potok);
+		updateAB(source,target,potok.data.id);
+	})
+});
+
+cy.on('position', 'node', function(evt){
+  const node = evt.target; 
+	node._private.edges.forEach((item)=>{
+		const source=item._private.data.source;
+		const target=item._private.data.target;
+		const potok=arr.find(elem=>elem.data.input==source&&elem.data.output==target);
+		console.log(source);
+		console.log(target);
+		console.log(potok);
+		updateAB(source,target,potok.data.id);
+	})
+});
+
 /* 	let e= cy.getElementById('e'); */
 
 /* let coords=Math.sqrt(Math.pow(pos2.x-pos1.x,2)+Math.pow(pos2.y-pos1.y,2)); */
@@ -271,7 +346,10 @@ edgs.forEach((item)=>{
 }) */
 
 
-const aaa=(()=>{
+/* const aaa=(()=>{
+	console.log(arr);
+console.log(edgs);
+console.log(nods);
 	console.log("позиция");
 	var pos1 = cy.$(`#${nodetemp.data.source}`).position();
 	var pos2 = cy.$(`#${nodetemp.data.target}`).position();
@@ -281,7 +359,7 @@ let coords={x:x,y:y};
 console.log(pos1);
 console.log(pos2);
 console.log(coords);
-cy.$(arr[chet].data.id).position(coords);
+cy.$(`#${arr[chet].data.id}`).position(coords);
 chet++;
 })
 var updateABC = function (){
@@ -290,20 +368,16 @@ var updateABC = function (){
 /* 
 cy.$('#0-00000000-0000-0000-0000-000000000003').connectedNodes().on('position', updateABC);
 cy.on('pan zoom resize', updateABC);  */
-let chet=0;
+/* let chet=0;
 const arr=nods.filter(item=>item.data.nod==='true');
-console.log(arr);
-console.log(edgs);
-console.log(nods);
+
 edgs.forEach(item=>{
 	setNodeTemp(item);
-	cy.$(`#${item.data.id}`).connectedNodes().on('position', updateABC);
+	cy.$(`#${edgs[chet].data.id}`).connectedNodes().on('position', updateABC);
 	cy.on('pan zoom resize', updateABC);
 }
-)
-	
-
-
+) */
+	 
 /* console.log(nods)
 console.log(edgs)
 const arr=nods.filter(item=>item.data.nod==='true');
