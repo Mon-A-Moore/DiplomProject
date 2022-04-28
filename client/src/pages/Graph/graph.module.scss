@@ -136,7 +136,8 @@ path:nth-child(2) {
 	top: 0;
 	right: 0;
 	transition: all 0.2s;
-	background-color: rgb(195, 219, 241);
+	background-color: var(--color-bg);
+	color:#fff;
 	display: flex;
 	flex-direction: column;
 	gap:5px;

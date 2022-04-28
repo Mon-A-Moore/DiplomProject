@@ -118,12 +118,59 @@ const arbys={
 			"isMeasured": true,
 			"isExcluded": false
 		}
+
+		,
+		{
+			"id": "00000000-0000-0000-0000-000000000008",
+			"sourceId": "00000000-0000-0000-0000-000000000003",
+			"destinationId": "00000000-0000-0000-0000-000000000004",
+			"name": "X7",
+			"measured": 0.991,
+			"correction": 0,
+			"metrologicUpperBound": 1000.0,
+			"metrologicLowerBound": 0.0,
+			"technologicUpperBound": 1000.0,
+			"technologicLowerBound": 0.0,
+			"tolerance": 0.02,
+			"isMeasured": true,
+			"isExcluded": false
+		},
+		{
+			"id": "00000000-0000-0000-0000-000000000009",
+			"sourceId": "00000000-0000-0000-0000-000000000003",
+			"destinationId": "00000000-0000-0000-0000-000000000005",
+			"name": "X7",
+			"measured": 0.991,
+			"correction": 0,
+			"metrologicUpperBound": 1000.0,
+			"metrologicLowerBound": 0.0,
+			"technologicUpperBound": 1000.0,
+			"technologicLowerBound": 0.0,
+			"tolerance": 0.02,
+			"isMeasured": true,
+			"isExcluded": false
+		},
+		{
+			"id": "00000000-0000-0000-0000-000000000010",
+			"sourceId": "00000000-0000-0000-0000-000000000005",
+			"destinationId": "00000000-0000-0000-0000-000000000006",
+			"name": "X7",
+			"measured": 0.991,
+			"correction": 0,
+			"metrologicUpperBound": 1000.0,
+			"metrologicLowerBound": 0.0,
+			"technologicUpperBound": 1000.0,
+			"technologicLowerBound": 0.0,
+			"tolerance": 0.02,
+			"isMeasured": true,
+			"isExcluded": false
+		}
 	]
 }
 //console.log(arbys);
 //рассчёт баланса
 const Calculation=async()=>{
-	const factoryId=1;
+	const factoryId=2;
 	const temp = await balanceCalculationCompany(JSON.stringify(arbys),factoryId);
 console.log(temp);
 }
