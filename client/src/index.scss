@@ -6,15 +6,20 @@
 }
 body {
   background: var(--color-bg);
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
+	font-family: 'Annie Use Your Telescope', cursive;
+	p{
+		font-family: 'Annie Use Your Telescope', cursive;
+	}
+
 }
 :root {
 
+	
 	--color-label:orange;
 	--color-text:white;
-	--color-additional:gray;
+	--color-data: gray;
+
+	--color-select-input:rgb(255, 165, 0);
 	//box-shadow: 0 0 5px 2px rgb(0 0 0 / 50%)
 
 /* 	background: rgba(28, 139, 255, 0.3);
@@ -22,15 +27,21 @@ body {
 	box-sizing: border-box; */
 
 	--color-form-background: rgba(23, 41, 69, 0.95);
-	--color-form-border: 1px solid rgba(27, 55, 99, 0.95);
+	--color-form-border: rgba(27, 55, 99, 0.95);
 
 	--color-item-form-background:rgba(53, 89, 153, 0.95);
 	--color-item-form-border:#1a63af;
 	--color-item-form-text:wheat;
 
+
+
   --color-bg: #0e101c;
+	--color-bg-centre:#011D4B;
+
   --color-auf: #2a68da;
 	--color-auf-lite: #31a6f5;
+
+
 
   --color-active: white;
 	--color-bar:rgb(52,58,65);

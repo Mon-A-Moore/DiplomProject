@@ -21,7 +21,7 @@
 	z-index: 2;
 	border-radius: 50%;
 	opacity: 90%;
-	border: medium dashed #011D4B;
+	border: medium dashed var(--color-bg-centre);
 	
 
 }
@@ -29,7 +29,7 @@
 	height: 100%;
 	width: 100%;
 	position: absolute;
-	background: radial-gradient(50% 50%, #011D4B, #0e101c);
+	background: radial-gradient(50% 50%, var(--color-bg-centre), var(--color-bg));
 	opacity: 60%;
 	z-index: 1;
 }
@@ -45,12 +45,12 @@
 	width: 80px;
 	border-radius: 50%;
 	border: 0;
-	background: radial-gradient(60% 60%,#0e101c, #1E4576,);
-	color: white;
+	background: radial-gradient(60% 60%,var(--color-bg), #1E4576);
+	color: var(--color-text);
 	z-index: 2;
 }
 .button:hover{
-	border: 2px dotted green;
+	border: 2px dotted var(--color-label);
 	cursor:pointer;
 }
 .button:active{

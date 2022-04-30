@@ -177,7 +177,7 @@ const Auth = observer(() => {
           </div>
         )}
         <button className={style.button} type="submit">
-          {isLogin ? 'Войти' : 'Зарегистрироваться'}
+          {isLogin ? <p>Войти</p> : <p>Зарегистрироваться</p>}
         </button>
       </form>
     </div>

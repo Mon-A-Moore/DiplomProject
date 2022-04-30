@@ -324,7 +324,7 @@ const CompanyCreate = observer(() => {
                         type="button"
                         onClick={() => removeInfo(i.number)}
                       >
-                        Удалить
+                        <p>Удалить</p>
                       </button>
                     </div>
                   </div>
@@ -336,14 +336,14 @@ const CompanyCreate = observer(() => {
                   type="button"
                   onClick={addInfo}
                 >
-                  Добавить
+                 <p>Добавить</p>
                 </button>
               </div>
             </section>
           </div>
         </section>
         <button className={style.button} type="submit">
-          Создать
+				<p>Создать</p>
         </button>
       </form>
       <Modal active={modalActive} setActive={() => navigate(COMPANY_ROUTE+'/'+ localStorage.companyId,{ replace: true })}>

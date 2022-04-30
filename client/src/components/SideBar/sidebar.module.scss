@@ -21,12 +21,10 @@
 
 }
 .button:hover{
-	background-color: white
+	background-color: var(--color-item-form-border)
 	
 }
-.button:active{
-	background-color:aqua
-}
+
 .link{
 	display: flex;
 	flex-direction: row;

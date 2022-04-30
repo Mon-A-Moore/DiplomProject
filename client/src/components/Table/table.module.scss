@@ -34,69 +34,70 @@
 		width: 6px;
 		}
 
+		thead{
+			position:sticky;
+			top:0;
+		}
+		table {
+			height: 100%;
+			width: 100%;
+			border-spacing: 0;
+			text-align: center;
+		
+		
+		
+			tr {
+				:last-child {
+					td {
+						
+						border-bottom: 0;
+					}
+				}
+			}
+		 th{
+			padding-top: 12px;
+			padding-bottom: 12px;
+			background-color: var(--color-auf-lite);
+			color: white;
+		 }
+			th,
+			td {
+				margin: 0;
+				padding: 0.5rem;
+				border: 1px solid #ddd;
+		
+		
+				/* The secret sauce */
+				/* Each cell should grow equally */
+				width: 1%;
+				/* But "collapsed" cells should be as small as possible */
+				&.collapse {
+					width: 0.0000000001%;
+				}
+		
+				:last-child {
+					max-height: 40px;
+					border-right: 0;
+				}
+			}
+			tr:hover {
+				background-color: #ddd;
+			}
+		}
 		
 }
 
 
 .tableWrap {
-	height: 95%;
-	max-height: 95%;
+	height: 93%;
+	max-height: 93%;
   display: block;
   max-width: 100%;
   overflow-x: scroll;
   overflow-y: auto;
 	font-family: 'Trebuchet MS', Arial, Helvetica, sans-serif;	
 }
-thead{
-	position:sticky;
-	top:0;
-}
-table {
-	height: 100%;
-  width: 100%;
-  border-spacing: 0;
-	text-align: center;
 
-
-
-  tr {
-    :last-child {
-      td {
-				
-        border-bottom: 0;
-      }
-    }
-  }
- th{
-	padding-top: 12px;
-  padding-bottom: 12px;
-  background-color: var(--color-auf-lite);
-  color: white;
- }
-  th,
-  td {
-    margin: 0;
-    padding: 0.5rem;
-		border: 1px solid #ddd;
-
-
-    /* The secret sauce */
-    /* Each cell should grow equally */
-    width: 1%;
-    /* But "collapsed" cells should be as small as possible */
-    &.collapse {
-      width: 0.0000000001%;
-    }
-
-    :last-child {
-			max-height: 40px;
-      border-right: 0;
-    }
-  }
-	tr:hover {
-		background-color: #ddd;
-	}
-}
 
 .pagination {
   padding: 0.5rem;

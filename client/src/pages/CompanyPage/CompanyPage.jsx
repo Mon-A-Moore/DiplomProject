@@ -39,7 +39,9 @@ const test=async()=>{
   return (
     <div className={style.container}>
       <div className={style.container__child}>
-        <div
+			<div
+          className={style.infoboxWrapper}>
+<div
           className={style.infobox}
           style={{ height: window.innerHeight - 120 }}
         >
@@ -92,8 +94,40 @@ const test=async()=>{
             </button>
           </div>
         </div>
+					</div>
+        
         <div className={style.main}>
-          <BasicTable />
+       {/*  <BasicTable /> */}
+			 <div className={style.news_content} >
+			 <ul className={style.news_list}>
+                <div className={style.news_entry}>
+                    <div className={style.news_label}>Тест запущен</div>
+                    <div className={style.news_text} >Регистрация доступна для всех желающих. Реализованы ещё не все игровые возможности, но работа ведётся каждый день. Как только мы достигнем приемлемого уровня играбельности, будут опубликованы посты о достигнутых успехах.</div>
+                    <div className={style.news_time} >23 марта 2021, в 15:00</div>
+                </div>
+								<div className={style.news_entry}>
+                    <div className={style.news_label}>Тест запущен</div>
+                    <div className={style.news_text} >Регистрация доступна для всех желающих. Реализованы ещё не все игровые возможности, но работа ведётся каждый день. Как только мы достигнем приемлемого уровня играбельности, будут опубликованы посты о достигнутых успехах.</div>
+                    <div className={style.news_time} >23 марта 2021, в 15:00</div>
+                </div>
+								<div className={style.news_entry}>
+                    <div className={style.news_label}>Тест запущен</div>
+                    <div className={style.news_text} >Регистрация доступна для всех желающих. Реализованы ещё не все игровые возможности, но работа ведётся каждый день. Как только мы достигнем приемлемого уровня играбельности, будут опубликованы посты о достигнутых успехах.</div>
+                    <div className={style.news_time} >23 марта 2021, в 15:00</div>
+                </div>
+								<div className={style.news_entry}>
+                    <div className={style.news_label}>Тест запущен</div>
+                    <div className={style.news_text} >Регистрация доступна для всех желающих. Реализованы ещё не все игровые возможности, но работа ведётся каждый день. Как только мы достигнем приемлемого уровня играбельности, будут опубликованы посты о достигнутых успехах.</div>
+                    <div className={style.news_time} >23 марта 2021, в 15:00</div>
+                </div>
+								<div className={style.news_entry}>
+                    <div className={style.news_label}>Тест запущен</div>
+                    <div className={style.news_text} >Регистрация доступна для всех желающих. Реализованы ещё не все игровые возможности, но работа ведётся каждый день. Как только мы достигнем приемлемого уровня играбельности, будут опубликованы посты о достигнутых успехах.</div>
+                    <div className={style.news_time} >23 марта 2021, в 15:00</div>
+                </div>
+								</ul>
+            </div>	
+						<div className={style.main_rightborder}></div>					
         </div>
       </div>
       <Modal active={modalActive} setActive={() => setModalActive(false)}>

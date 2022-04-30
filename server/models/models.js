@@ -23,6 +23,13 @@ const CompanyInfo = sequelize.define('company_info', {
 },
 {onDelete: 'cascade', hooks:true}
 );
+const CompanyNews = sequelize.define('company_news', {
+  id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+  title: { type: DataTypes.STRING, allowNull: false },
+  description: { type: DataTypes.STRING, allowNull: false },
+},
+{onDelete: 'cascade', hooks:true}
+);
 const CompanyUsers = sequelize.define('company_users', {
   id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
   email: { type: DataTypes.STRING , unique: true , allowNull: false },
@@ -131,6 +138,9 @@ User.belongsTo(Company);
 Company.hasMany(CompanyInfo, { as: 'info' });
 CompanyInfo.belongsTo(Company);
 
+Company.hasMany(CompanyNews, { as: 'news' });
+CompanyNews.belongsTo(Company);
+
 Company.hasMany(CompanyUsers, { as: 'companyusers' });
 CompanyUsers.belongsTo(Company);
 
@@ -162,6 +172,7 @@ module.exports = {
   User,
   Company,
   CompanyInfo,
+	CompanyNews,
 	CompanyUsers,
 	Factory,
   //balance

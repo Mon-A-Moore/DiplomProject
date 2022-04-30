@@ -23,7 +23,7 @@ const SideBar = observer(() => {
           className={style.container}>
           {IMAGES.map((item) => (
               <button className={style.button}>
-								<CustomLink className={style.link} to={item.path} bgcolor="green" >  
+								<CustomLink className={style.link} to={item.path} bgcolor="var(--color-item-form-border)" >  
 								<div className={style.block}></div>            
                 <div className={style.block_img}>
                   <picture>

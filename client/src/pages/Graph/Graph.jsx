@@ -21,7 +21,6 @@ const [factory, setFactory] = useState(null);
 const [factories, setFactories] = useState([]);
 useEffect(() => {
 	getAllFactory(localStorage.companyId).then(data => (
-/* 		console.log(data), */
 		setFactories(data)));
 }, []);
 
@@ -40,22 +39,16 @@ useEffect(() => {
 const [graphsel, setGraphsel] = useState(null);
 useEffect(() => {
 	if(balanceSelect!==null){
-/* 		console.log(balances);
-		console.log(balances); */
-/* 		console.log(balances); 
-		console.log(balanceSelect); */
+
 		balances.forEach(item=>{
 		
 			if(item.id===Number(balanceSelect))
 			{
 				
 			setGraphsel(item)
-			/* console.log(item); */
 			}
 		})
-		/* setGraphsel(balances.forEach.find(item => item.id === balanceSelect )); */
-	
-/* 	console.log(graphsel) */
+
 	}
 }, [balanceSelect,balances]);
 
@@ -76,8 +69,6 @@ useEffect(() => {
 
   return (
     <div className={style.container}>
-			{/* <h1 className={style.title}>Графическое представление балансов компании "название, пробел, логотип"</h1> */}
-
 			<Drawgraph graphsel={graphsel}/>
 				<div className={style.menu_svgDiv}>
 				<svg   className={classNames(style.menu_svg,menuActive? style.menu_svgActive:style.menu_svgUnActive)} viewBox="0 0 17 30" xmlns="http://www.w3.org/2000/svg" onClick={()=>setMenuActive(!menuActive)}>
@@ -90,9 +81,9 @@ useEffect(() => {
 				</div>
 				<div className={classNames(style.menu,menuActive? style.menu_unactive:style.menu_active)}>
 
-				<label for="model-select">Модель</label>
+				<label className={style.label} for="model-select">Модель</label>
 <div className={style.select}>
-  <select id="model-select" onChange={e=>setFactory(e.target.value)}>
+  <select id="model-select"  onChange={e=>setFactory(e.target.value)}>
 	<option value="0" selected="selected" data-skip="1">Выберите модель</option>
 	{factories.map((item)=>(
 						<option value={item.id}>{item.name}</option>
@@ -103,7 +94,7 @@ useEffect(() => {
 
 <div className={style.graphData}>
 	<div className={style.inputDiv}>
-	<label for="data-start">Начальная дата</label>
+	<label className={style.label} for="data-start">Начальная дата</label>
 				<input
 				id="data-start"
                         className={style.input}                                    
@@ -113,7 +104,7 @@ useEffect(() => {
                       />
 	</div>
 	<div className={style.inputDiv}>
-	<label for="data-end">Конечная дата</label>
+	<label className={style.label} for="data-end">Конечная дата</label>
 				<input
 				id="data-end"
                         className={style.input}                                    
@@ -123,7 +114,7 @@ useEffect(() => {
 </div>						
 				</div>
 
-<label for="balance-select">Список балансов</label>
+<label className={style.label} for="balance-select">Список балансов</label>
 <div className={classNames(style.select,style.selectMultiple)} onChange={e=>setBalanceSelect(e.target.value)}>
   <select id="balance-select" multiple>
 	{balances.map((item)=>(
@@ -151,13 +142,13 @@ viewBox="0 -5 40 40"  xmlSpace="preserve">
 				<div  id="menuResult" className={classNames(style.menuResult,menuResultActive? style.menuResult_unactive:style.menuResult_active)}>
 
 				<div   className={style.menuResult_item}>
-				calculationTime:<br/>{graphsel!=null? graphsel.calculation_output.calculationTime :"null"}
+				<label className={style.label}>calculationTime:</label><br/><p>{graphsel!=null? graphsel.calculation_output.calculationTime :"null"}</p>
 				</div>
 				<div   className={style.menuResult_item}>
-				disbalanceOriginal:<br/>{graphsel!=null? graphsel.calculation_output.disbalanceOriginal :'null'} 
+				<label className={style.label}>disbalanceOriginal:</label><br/><p>{graphsel!=null? graphsel.calculation_output.disbalanceOriginal :'null'} </p>
 				</div>
 				<div   className={style.menuResult_item}>
-				disbalance:<br/>{graphsel!=null? graphsel.calculation_output.disbalance : 'null'} 
+				<label className={style.label}>disbalance:</label><br/><p>{graphsel!=null? graphsel.calculation_output.disbalance : 'null'} </p>
 				</div>
 				</div>
 				

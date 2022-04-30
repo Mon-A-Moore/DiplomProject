@@ -31,7 +31,7 @@ const Homepage = observer(() => {
 
 <div className={style.video__back}></div>
 <div className={style.centre}>
-{state.user ? <CustomLink to={COMPANY_ROUTE+'/'+localStorage.companyId} colordefault='white'><button className={style.button}>Войти</button></CustomLink> : <CustomLink to={LOGIN_ROUTE} colordefault='white'><button className={style.button}>Войти</button></CustomLink>}
+{state.user ? <CustomLink to={COMPANY_ROUTE+'/'+localStorage.companyId} colordefault='white'><button className={style.button}><p>Войти</p></button></CustomLink> : <CustomLink to={LOGIN_ROUTE} colordefault='white'><button className={style.button}><p>Войти</p></button></CustomLink>}
 
 <div className={style.button__back}></div></div>
 

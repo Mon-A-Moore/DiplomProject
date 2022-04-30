@@ -18,9 +18,9 @@ opacity: 1;
 pointer-events: all;
 }
 .modal__content{
-	padding: 2px;
+	padding: 1px;
 	border-radius: 12px;
-	background-color: white;
+	background-color: var(--color-form-background);
 	transform: scale(0.5);
 	transition: 0.4s all;
 }

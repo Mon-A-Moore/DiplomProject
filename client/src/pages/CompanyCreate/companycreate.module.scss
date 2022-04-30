@@ -25,8 +25,11 @@
   display: block;
   box-sizing: border-box;
   width: 100%;
-  border-radius: 4px;
-  border: 1px solid white;
+  border-radius: 3px;
+	border: 1px solid #1a63af;
+	color:var(--color-item-form-text);
+	background: rgba(28, 139, 255, 0.3);
+	box-shadow: inset 0 0 3px 1px rgb(28 139 255 / 30%);	
   padding: 10px 15px;
   margin-bottom: 10px;
   font-size: 14px;
@@ -38,7 +41,7 @@
   display: block;
   margin-bottom: 6px;
   margin-top: 10px;
-  color: white;
+  color: var(--color-label);
   font-size: 14px;
   font-weight: 200;
 }
@@ -47,10 +50,10 @@
 }
 .button[type='submit'],
 .input[type='submit'] {
-  background: var(--color-auf-lite);
+  background: var(--color-auf);
   border-radius: 4px;
   cursor: pointer;
-  color: white;
+  color: var(--color-item-form-text);
   border: none;
   margin: 20px 0;
   font-size: 16px;
@@ -58,18 +61,21 @@
   line-height: 1;
   letter-spacing: 8px;
   width: 100%;
-  transition: all 0.3s;
+  transition: all 0.2s ease;
 }
 
 .button[type='submit']:hover,
 .input[type='submit']:hover {
-  background: var(--color-auf);
+	border: 1px solid var(--color-select-input);
+	
+	
 }
 
 .button[type='submit']:active,
 .input[type='button']:active,
 .input[type='submit']:active {
-  transition: 0.3s all;
+  transition: all 0.2s ease;
+	background: var(--color-auf-lite);
   transform: translateY(3px);
   border: 1px solid transparent;
   opacity: 0.8;
@@ -94,7 +100,7 @@
   display: block;
   appearance: none;
   background: #333;
-  color: white;
+  color: var(--color-item-form-text);
   border: none;
   text-transform: uppercase;
   padding: 10px 20px;
@@ -109,7 +115,7 @@
 }
 
 .typography {
-  color: white;
+  color: var(--color-label);
   padding-bottom: 10px;
   font-weight: 400;
   margin: 10px auto;
@@ -194,11 +200,11 @@
 
 	width: 100%;
 	height: 100%;
-	border: 3px dashed var(--color-active);
+	border: 3px dashed var(--color-select-input);
 	display:flex;
 	align-items: center;
 	justify-content: center;
-	color: var(--color-active);
+
 }
 .dropArea{
 
@@ -208,7 +214,7 @@
 	display:flex;
 	align-items: center;
 	justify-content: center;
-	color: var(--color-active);
+
 }
 .containerUploads{
 	display:flex;
@@ -231,6 +237,10 @@
 	grid-template-columns:  250px auto ;
 	margin-bottom: 10px;
 
+	p{
+		color: var(--color-item-form-text);
+		opacity: 30%;
+	}
 }
 
 .logo{
@@ -277,13 +287,13 @@ display: none;
 		}
 		
 		::-webkit-scrollbar-track {
-		background-color:#ecedee
+		background-color:white
 		}
 		
 		::-webkit-scrollbar-thumb {
 		-webkit-border-radius: 0px;
 		border-radius: 0px;
-		background-color:var(--color-auf);
+		background-color:var(--color-select-input);
 		}
 		
 		::-webkit-scrollbar-thumb:hover{
@@ -325,7 +335,7 @@ align-items: center;
 	background: var(--color-auf);
   border-radius: 4px;
   cursor: pointer;
-  color: white;
+  color: var(--color-item-form-text);
   border: none;
   font-size: 14px;
   font-weight: 400;
@@ -336,7 +346,7 @@ align-items: center;
   transition: all 0.3s;
 }
 .buttonDel:hover{
-	background: var(--color-auf-lite);
+	border: 1px solid var(--color-select-input);
 }
 
 .buttonDel:active{
@@ -355,7 +365,7 @@ align-items: center;
 		background: var(--color-auf);
 		border-radius: 4px;
 		cursor: pointer;
-		color: white;
+		color: var(--color-item-form-text);
 		border: none;
 		font-size: 14px;
 		font-weight: 400;
@@ -366,7 +376,7 @@ align-items: center;
 		transition: all 0.3s;
 	}
 	.list__buttonAdd:hover{
-		background: var(--color-auf-lite);
+		border: 1px solid var(--color-select-input);
 	}
 	
 	.list__buttonAdd:active{
@@ -384,7 +394,7 @@ align-items: center;
 		
 	}
 	.modal__h3{
-		color: white;
+		color: var(--color-label);
 margin-top: 5px;
 		font-weight: 400;
 		overflow: hidden;
@@ -404,7 +414,7 @@ margin-top: 5px;
 		background: var(--color-auf);
 		border-radius: 4px;
 		cursor: pointer;
-		color: white;
+		color: var(--color-item-form-text);
 		border: none;
 		font-size: 14px;
 		font-weight: 400;
@@ -415,7 +425,8 @@ margin-top: 5px;
 		transition: all 0.3s;
 	}
 	.modal__button:hover{
-		background: var(--color-auf-lite);
+		border: 1px solid var(--color-select-input);
+
 	}
 	
 	.modal__button:active{
@@ -445,7 +456,7 @@ margin-top: 5px;
 }
 .cl_btn_7:before {
     content: '+';
-    color: #337AB7;
+    color: var(--color-auf);
     position: absolute;
     z-index: 2;
     transform: rotate(45deg);
@@ -463,7 +474,7 @@ margin-top: 5px;
     width: 100%;
     height: 100%;
     border-radius: 100%;
-    background: #337AB7;
+    background: var(--color-auf);
     z-index: 1;
     transition: all 0.3s cubic-bezier(0.77, 0, 0.2, 0.85);
     transform: scale(0.01);
@@ -473,5 +484,5 @@ margin-top: 5px;
 }
 .cl_btn_7:hover:before {
     transform: scale(0.8) rotate(45deg);
-    color: #fff;
+    color: var(--color-item-form-text);
 }

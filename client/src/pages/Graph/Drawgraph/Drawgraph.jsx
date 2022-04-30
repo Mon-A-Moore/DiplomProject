@@ -1,23 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import style from './drawgraph.module.scss';
 import cytoscape from 'cytoscape';
-import popper from 'cytoscape-popper';
-import { left, right } from '@popperjs/core';
 
-//import classNames from 'classnames'
-cytoscape.use( popper );
+
 
 const Drawgraph = ({graphsel}) => {
-/* 	console.log("graphsel");
-console.log(graphsel); */
-const [nodetemp,setNodeTemp]=useState([])
-/* useEffect(()=>{
-
-},[])
- */
-
-
-
 useEffect(() => {
 
 
@@ -71,16 +58,15 @@ const chetchik=((a)=>{
 	const chislo = Number(znach);
 	return chislo;
 })
-/* console.log(graphsel) */
 
 const nods=[],edgs=[];
 if(graphsel!==null){
 graphsel.calculation_input.BalanceInputVariables.forEach((item,index)=>{
-	const isMeasured = item.isMeasured?"green":"red";
+	const isMeasured = item.isMeasured?"#17B978":"#97182B";
 		if(item.destinationId!=="NULL" && item.sourceId!=="NULL")
 		{
 
-		edgs.push({data: { id: `0-${item.id}`, source: item.sourceId, target: item.destinationId,arrow:"triangle",lineStyle:"solid" } });
+		edgs.push({data: { id: `0-${item.id}`, source: item.sourceId, target: item.destinationId,arrow:"triangle",lineStyle:"solid",color:'rgba(23, 41, 69, 0.95)' } });
 		const a= item.sourceId;
 		const aa= nods.find(item =>item.data.id ===a);
 		if(aa===undefined)
@@ -106,8 +92,8 @@ graphsel.calculation_input.BalanceInputVariables.forEach((item,index)=>{
 			if(item.destinationId==="NULL")
 			{
 				
-				edgs.push({data: { id: `0-${item.id}`, source: item.sourceId, target: `${nods.length}`, arrow:"triangle",lineStyle:"dashed"} });
-				nods.push({data: { id: nods.length}});
+				edgs.push({data: { id: `0-${item.id}`, source: item.sourceId, target: `${nods.length}`, arrow:"triangle",lineStyle:"dashed",color:'#D073FF'} });
+				nods.push({data: { id: nods.length, InOut:'diamond',color:'#D073FF'}});
 
 				nods.push({data: { id: `${nods.length}`, nod:'true',label:`${item.name}`,background: `${isMeasured}`, input:item.sourceId,output:nods.length-1   },grabbable: false});
 				nods.push({data: { id: `${nods.length}`, type:'cut-rectangle',parent:`${nods.length-1}`, data:`id:${item.id}\nsourceId:${item.sourceId}\ndestinationId:${item.destinationId}\nmeasured:${item.measured}\ncorrection:${item.correction}\ntechnologicUpperBound:${item.technologicUpperBound}\ntechnologicLowerBound:${item.technologicLowerBound}\ntolerance:${item.tolerance}\nvalue:${graphsel.calculation_output.balanceOutputVariables[index].value}` },grabbable: false});
@@ -118,8 +104,8 @@ graphsel.calculation_input.BalanceInputVariables.forEach((item,index)=>{
 			if(item.sourceId==="NULL")
 			{
 				
-				edgs.push({data: { id: `0-${item.id}`, source: `${nods.length}`, target: item.destinationId, arrow:"triangle",lineStyle:"dashed"} });
-				nods.push({data: { id: nods.length}});
+				edgs.push({data: { id: `0-${item.id}`, source: `${nods.length}`, target: item.destinationId, arrow:"triangle",lineStyle:"dashed",color:'#FFD25F'} });
+				nods.push({data: { id: nods.length, InOut:'triangle',color:'#FFD25F'}});
 				
 				nods.push({data: { id: `${nods.length}`, nod:'true',label:`${item.name}`,background: `${isMeasured}`, input:nods.length-1,output:item.destinationId   },grabbable: false});
 				nods.push({data: { id: `${nods.length}`, type:'cut-rectangle',parent:`${nods.length-1}`, data:`id:${item.id}\nsourceId:${item.sourceId}\ndestinationId:${item.destinationId}\nmeasured:${item.measured}\ncorrection:${item.correction}\ntechnologicUpperBound:${item.technologicUpperBound}\ntechnologicLowerBound:${item.technologicLowerBound}\ntolerance:${item.tolerance}\nvalue:${graphsel.calculation_output.balanceOutputVariables[index].value}` },grabbable: false});
@@ -128,9 +114,6 @@ graphsel.calculation_input.BalanceInputVariables.forEach((item,index)=>{
 
 	}) 
 }
-/* 	console.log(nods)
-	console.log('fffffffffff')
-	console.log(edgs) */
 	let cy = window.cy = cytoscape({
 		container: document.getElementById('cy'),
 		zoom: 1,
@@ -145,24 +128,18 @@ graphsel.calculation_input.BalanceInputVariables.forEach((item,index)=>{
 				.css({
 
 					"curve-style": "straight",
- 					'width': 3,
-					'line-color': '#369',
-					'font-size': '14px',
-					'color': '#777' ,
-					'text-margin-y': -15,
+ 					'width': 13,
+					'line-color': 'rgba(23, 41, 69, 0.95)',
 
 				})
-				.selector('edge[arrow][lineStyle]')
+				.selector('edge[arrow][lineStyle][color]')
 				.css({
 
 					"curve-style": "straight",
- 					'width': 3,
-					'line-color': '#369',
-					'target-arrow-color': '#369',
+ 					'width': 13,
+					'line-color': 'data(color)',
+					'target-arrow-color': 'data(color)',
 					'target-arrow-shape': 'data(arrow)',
-					'font-size': '14px',
-					'color': '#777' ,
-					'text-margin-y': -15,
 					"line-style" : 'data(lineStyle)',
 					"z-compound-depth":'bottom', 
 
@@ -170,39 +147,50 @@ graphsel.calculation_input.BalanceInputVariables.forEach((item,index)=>{
 
 			.selector('node')
 				.css({
-					'background-color': 'white' ,
-					"width":50,
-					"height":50,
+					'background-color': '#FFD25F' ,
+					"width":100,
+					"height":100,
+					"border-width": 2.25,
+					"border-color": "#1a63af",
 				})
 
-/* 					.selector(':parent')
-					.css({
-						'text-valign': 'top',
-						'text-halign': 'center',
-					}) */
+
+				.selector('node[InOut][color]')
+				.css({
+					"width":100,
+					"height":100,
+					"border-width": 2.25,
+					"border-color": "#1a63af",
+					"shape": 'data(InOut)',
+					'background-color': 'data(color)',
+				})
 
 				.selector('node[name]')
 				.css({
 				"text-valign": "center",//высота надписи по вертикали
     		"text-halign": "center", // надписи по горизонтали
-				"width":50,
-				"height":50,
+				"width":150,
+				"height":150,
 				'label': 'data(name)',
-					'color': 'white',
+					'color': 'wheat',
+					'font-size': '3em',
 					'text-outline-width': 1,
-					'text-outline-color': '#888',
-					'background-color': '#888',
-					"border-width": 1.25,
-					"border-color": "#555555",
+					'text-outline-color': 'rgba(53, 89, 153, 0.95)',
+					'background-color': 'rgba(53, 89, 153, 0.95)',
+					"border-width": 2.25,
+					"border-color": "#1a63af",
 				})
 
 				.selector('node[nod][label][background]')
 				.css({
 					'background-color': 'data(background)', 
 					'label': 'data(label)',
+					'font-size': '5em',
+					'text-margin-y': -15,
+					'color': 'orange',
 					"shape": "barrel",
 					"border-width": 1.25,
-					"border-color": "#555555",
+					"border-color": "rgba(27, 55, 99, 0.95)",
 				})
 
 				.selector('node[data][type]')
@@ -217,17 +205,12 @@ graphsel.calculation_input.BalanceInputVariables.forEach((item,index)=>{
 				"text-justification":"left",
 				"font-style": "normal",
 				"font-weight": "normal",
-					'color': 'white',
-					'text-outline-width': 2,
-					'text-outline-color': '#888',
-					"background-color": "#f4a582",
+					'color': 'wheat',
+
+					"background-color": "rgba(53, 89, 153, 0.95)",
 					"border-width": 1.25,
-					"border-color": "#555555",
+					"border-color": "#1a63af",
 				})
-/* 				.selector('node[type]')
-				.css({
-					'background-color': 'black' ,
-				}) */
 
 			.selector(':selected')
 				.css({
@@ -275,33 +258,10 @@ graphsel.calculation_input.BalanceInputVariables.forEach((item,index)=>{
 
 
 
-/* 
-const updateAB = function (source,target){
-	let pos1 = cy.$("#"+source).position();
-	let pos2 = cy.$("#"+target).position();
-	
-	let x= pos2.x-(pos2.x-pos1.x)/2;
-let y= pos2.y-(pos2.y-pos1.y)/2;
-let coords={x:x,y:y};
-cy.$("#"+arr[iter].data.id).position(coords);
-};
 const arr=nods.filter(item=>item.data.nod==='true');
-
-let iter=0;
-edgs.forEach((item)=>{
-
-	cy.$("#"+item.data.id).connectedNodes().on('position', updateAB(item.data.source,item.data.target));
-	cy.on('pan zoom resize', updateAB(item.data.source,item.data.target));
-	iter++;
-}) */
-
-const arr=nods.filter(item=>item.data.nod==='true');
-/* console.log(arr); */
 
 const updateAB = function (source,target,potok){
-/* 	console.log(source);
-	console.log(target);
-	console.log(potok); */
+
 	let pos1 = cy.$("#"+source).position();
 	let pos2 = cy.$("#"+target).position();
 	
@@ -345,252 +305,6 @@ cy.on('position', 'node', function(evt){
 		updateAB(source,target,potok.data.id);
 	})
 });
-
-/* 	let e= cy.getElementById('e'); */
-
-/* let coords=Math.sqrt(Math.pow(pos2.x-pos1.x,2)+Math.pow(pos2.y-pos1.y,2)); */
-
-
-/* 	console.log(pos1)
-console.log(pos2)
-console.log(coords) */
-
-/* const updateAB = function (source,target){
-	let pos1 = cy.$(`#${source}`).position();
-	let pos2 = cy.$(`#${target}`).position();
-	
-	let x= pos2.x-(pos2.x-pos1.x)/2;
-let y= pos2.y-(pos2.y-pos1.y)/2;
-let coords={x:x,y:y};
-cy.$(`#${arr[iter].data.id}`).position(coords);
-};
-const arr=nods.filter(item=>item.data.nod==='true');
-
-let iter=0;
-edgs.forEach((item)=>{
-
-	cy.$(`#${item.data.id}`).connectedNodes().on('position', updateAB(item.data.source,item.data.target));
-	cy.on('pan zoom resize', updateAB(item.data.source,item.data.target));
-	iter++;
-}) */
-
-
-/* const aaa=(()=>{
-	console.log(arr);
-console.log(edgs);
-console.log(nods);
-	console.log("позиция");
-	var pos1 = cy.$(`#${nodetemp.data.source}`).position();
-	var pos2 = cy.$(`#${nodetemp.data.target}`).position();
-	let x= pos2.x-(pos2.x-pos1.x)/2;
-let y= pos2.y-(pos2.y-pos1.y)/2;
-let coords={x:x,y:y};
-console.log(pos1);
-console.log(pos2);
-console.log(coords);
-cy.$(`#${arr[chet].data.id}`).position(coords);
-chet++;
-})
-var updateABC = function (){
-	aaa();
-};
-/* 
-cy.$('#0-00000000-0000-0000-0000-000000000003').connectedNodes().on('position', updateABC);
-cy.on('pan zoom resize', updateABC);  */
-/* let chet=0;
-const arr=nods.filter(item=>item.data.nod==='true');
-
-edgs.forEach(item=>{
-	setNodeTemp(item);
-	cy.$(`#${edgs[chet].data.id}`).connectedNodes().on('position', updateABC);
-	cy.on('pan zoom resize', updateABC);
-}
-) */
-	 
-/* console.log(nods)
-console.log(edgs)
-const arr=nods.filter(item=>item.data.nod==='true');
-var updateABC = function(){
-	const a=nods[16].data.id;
-const b=nods[9].data.id;
-	console.log("позиция");
-	var pos1 = cy.$(`#${a}`).position();
-	var pos2 = cy.$(`#${b}`).position();
-	let x= pos2.x-(pos2.x-pos1.x)/2;
-let y= pos2.y-(pos2.y-pos1.y)/2;
-let coords={x:x,y:y};
-console.log(pos1);
-console.log(pos2);
-console.log(coords);
-cy.$(`#${arr[0].data.id}`).position(coords);
-};
-cy.$(`#${edgs[5]}`).connectedNodes().on('position', updateABC);
-cy.on('pan zoom resize', updateABC); 
- */
-
-/* console.log(nods)
-console.log(edgs)
-const arr=nods.filter(item=>item.data.nod==='true');
-var updateABC = function(){
-	const a=nods[16].data.id;
-const b=nods[9].data.id;
-	console.log("позиция");
-	var pos1 = cy.$(`#${a}`).position();
-	var pos2 = cy.$(`#${b}`).position();
-	let x= pos2.x-(pos2.x-pos1.x)/2;
-let y= pos2.y-(pos2.y-pos1.y)/2;
-let coords={x:x,y:y};
-console.log(pos1);
-console.log(pos2);
-console.log(coords);
-cy.$(`#${arr[0].data.id}`).position(coords);
-};
-cy.$(`#${edgs[5]}`).connectedNodes().on('position', updateABC);
-cy.on('pan zoom resize', updateABC);  */
-
-/* //работает
- console.log(nods)
-console.log(edgs)
-const arr=nods.filter(item=>item.data.nod==='true');
-var updateABC = function(){
-	console.log("позиция");
-	var pos1 = cy.$(`#${nods[16].data.id}`).position();
-	var pos2 = cy.$(`#${nods[9].data.id}`).position();
-	let x= pos2.x-(pos2.x-pos1.x)/2;
-let y= pos2.y-(pos2.y-pos1.y)/2;
-let coords={x:x,y:y};
-console.log(pos1);
-console.log(pos2);
-console.log(coords);
-cy.$(`#${arr[0].data.id}`).position(coords);
-};
-cy.$(`#${edgs[5]}`).connectedNodes().on('position', updateABC);
-cy.on('pan zoom resize', updateABC);  */
-
-
-/* var updateABC = function(){
-	console.log("позиция");
-	var pos1 = cy.$('#00000000-0000-0000-0000-000000000001').position();
-	var pos2 = cy.$('#00000000-0000-0000-0000-000000000002').position();
-	let x= pos2.x-(pos2.x-pos1.x)/2;
-let y= pos2.y-(pos2.y-pos1.y)/2;
-let coords={x:x,y:y};
-console.log(pos1);
-console.log(pos2);
-console.log(coords);
-cy.$('#1').position(coords);
-};
-cy.$('#0-00000000-0000-0000-0000-000000000003').connectedNodes().on('position', updateABC);
-cy.on('pan zoom resize', updateABC); 
- */
-/* var updateAB = function(){
-	var pos1 = cy.$('#b').position();
-	var pos2 = cy.$('#d').position();
-	let x= pos2.x-(pos2.x-pos1.x)/2;
-let y= pos2.y-(pos2.y-pos1.y)/2;
-let coords={x:x,y:y};
-cy.$('#e').position(coords);
-};
-
-cy.$('#bd').connectedNodes().on('position', updateAB);
-cy.on('pan zoom resize', updateAB); */
-
-/* 
-let updateAB = function(){
-	popperAB.update();
-};
-
-variable.connectedNodes().on('position', updateAB);
-cy.on('pan zoom resize', updateAB); */
-
-
-/* 
-var ab = cy.getElementById('bd');
-
-var makeDiv = function(text){
-	var div = document.createElement('div');
-
-	div.classList.add('popper-div');
-
-	div.innerHTML = text;
-
-	document.body.appendChild( div );
-
-	return div;
-};
-			var popperAB = ab.popper({
-				content: function(){ return makeDiv('Sticky position div'); }
-			});
-
-			var updateAB = function(){
-				popperAB.update();
-			};
-
-			ab.connectedNodes().on('position', updateAB);
-			cy.on('pan zoom resize', updateAB);
-
-
-
- */
-
-
-
-
-
-
-
-/* 	let variable= cy.getElementById('bd');
-	let updateAB = function(){
-		e.update();
-	};
-
-	variable.connectedNodes().('position', updateAB);
-	cy.on('pan zoom resize', updateAB); */
-
-/* 	let x = cy.$('#a').position('x');
-console.log(x)
-let y = cy.$('#a').position('y'); */
-
-/* 
-const makeDiv =(text)=>{
-	let div = document.createElement('div');
-
-	div.classList.add(style.popperDiv);
-
-	div.innerHTML = text;
-
-	divWrapper.appendChild( div );
-
-	return div;
-};
-
-
-
-
-
-let divWrapper = document.getElementById('divWrapper');
-
-	edgs.forEach(item=>{
-		let variable= cy.getElementById(item.data.id);
-
-		const element = balanceOutputVariables.find(elem =>`0-${elem.id}` === item.data.id);
-
-		let popperAB = variable.popper({
-			content:  makeDiv(
-				` 'value': ${element.value},
-					'upperBound': ${element.upperBound},
-					'lowerBound': ${element.lowerBound},`),
-		});
-
-		let updateAB = function(){
-			popperAB.update();
-		};
-	
-		variable.connectedNodes().on('position', updateAB);
-		cy.on('pan zoom resize', updateAB);
-	
-	
-	}) */
 
 }, [graphsel]); 
 
