@@ -259,22 +259,37 @@ class BalanceController {
   async balanceCalculation(req, res, next) {
     try {
 			const {factoryId} = req.params;
-      let input = req.body;
-			const result = await AccordSolver(JSON.stringify(input));
+
 			
-      const balancecalculation = await BalanceCalculation.create({
+			
+			
+			//input=JSON.parse(input);
+			//console.info('fffffffffffffffffffffffffffffffff');
+			//console.info(input);
+/* 			let input =  require("./outdata.json");
+			const result = await AccordSolver(input); */
+			let input = req.body;
+			await AccordSolver(JSON.stringify(input)).then((result)=>{
+
+			if(result.status!=="Success"){
+				
+				const mes="Failed to solve balance task.";
+			return res.json(mes);
+			}
+		//	console.info(result);
+      const balancecalculation =  BalanceCalculation.create({
         factoryId: factoryId,
       });
-      const calculationinput = await СalculationInput.create({
+      const calculationinput =  СalculationInput.create({
         balanceCalculationId: balancecalculation.id,
       });
-      await СalculationBalanceSettings.create({
+       СalculationBalanceSettings.create({
         calculationInputId: calculationinput.id,
         balanceSettingsConstraints:
           input.balanceSettings.balanceSettingsConstraints,
       });
  
-      await input.BalanceInputVariables.forEach((item) =>
+       input.BalanceInputVariables.forEach((item) =>
         СalculationInputVariables.create({
           id: item.id,
           sourceId: item.sourceId,
@@ -300,7 +315,7 @@ class BalanceController {
       
       //	console.info(result);
       //	console.info(result.calculationTime);
-      const calculationoutput = await СalculationOutput.create({
+      const calculationoutput =  СalculationOutput.create({
         calculationTime: result.calculationTime,
         disbalanceOriginal: result.disbalanceOriginal,
         disbalance: result.disbalance,
@@ -309,7 +324,7 @@ class BalanceController {
         balanceCalculationId: balancecalculation.id,
       });
 
-      await result.balanceOutputVariables.forEach((i) => {
+       result.balanceOutputVariables.forEach((i) => {
         СalculationOutputVariables.create({
           id: i.id,
           source: i.source,
@@ -323,6 +338,7 @@ class BalanceController {
       });
 
       return res.json(result);
+		})
     } catch (e) {
       next(ApiError.badRequest(e.message));
     }

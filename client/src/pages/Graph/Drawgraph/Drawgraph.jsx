@@ -62,6 +62,13 @@ const chetchik=((a)=>{
 const nods=[],edgs=[];
 if(graphsel!==null){
 graphsel.calculation_input.BalanceInputVariables.forEach((item,index)=>{
+	let value=0;
+	console.log(index);
+	console.log(graphsel.calculation_output);
+	if(typeof graphsel.calculation_output.balanceOutputVariables[index]?.value === "undefined")
+	value=0;
+else
+value=graphsel.calculation_output.balanceOutputVariables[index].value;
 	const isMeasured = item.isMeasured?"#17B978":"#97182B";
 		if(item.destinationId!=="NULL" && item.sourceId!=="NULL")
 		{
@@ -83,7 +90,7 @@ graphsel.calculation_input.BalanceInputVariables.forEach((item,index)=>{
 		
 
 		nods.push({data: { id: `${nods.length}`, nod:'true',label:`${item.name}`,background: `${isMeasured}`, input:item.sourceId,output:item.destinationId  },grabbable: false});
-		nods.push({data: { id: `${nods.length}`, type:'cut-rectangle',parent:`${nods.length-1}`, data:`id:${item.id}\nsourceId:${item.sourceId}\ndestinationId:${item.destinationId}\nmeasured:${item.measured}\ncorrection:${item.correction}\ntechnologicUpperBound:${item.technologicUpperBound}\ntechnologicLowerBound:${item.technologicLowerBound}\ntolerance:${item.tolerance}\nvalue:${graphsel.calculation_output.balanceOutputVariables[index].value}` },grabbable: false});
+		nods.push({data: { id: `${nods.length}`, type:'cut-rectangle',parent:`${nods.length-1}`, data:`id:${item.id}\nsourceId:${item.sourceId}\ndestinationId:${item.destinationId}\nmeasured:${item.measured}\ncorrection:${item.correction}\ntechnologicUpperBound:${item.technologicUpperBound}\ntechnologicLowerBound:${item.technologicLowerBound}\ntolerance:${item.tolerance}\nvalue:${value}` },grabbable: false});
 
 
 
@@ -96,7 +103,7 @@ graphsel.calculation_input.BalanceInputVariables.forEach((item,index)=>{
 				nods.push({data: { id: nods.length, InOut:'diamond',color:'#D073FF'}});
 
 				nods.push({data: { id: `${nods.length}`, nod:'true',label:`${item.name}`,background: `${isMeasured}`, input:item.sourceId,output:nods.length-1   },grabbable: false});
-				nods.push({data: { id: `${nods.length}`, type:'cut-rectangle',parent:`${nods.length-1}`, data:`id:${item.id}\nsourceId:${item.sourceId}\ndestinationId:${item.destinationId}\nmeasured:${item.measured}\ncorrection:${item.correction}\ntechnologicUpperBound:${item.technologicUpperBound}\ntechnologicLowerBound:${item.technologicLowerBound}\ntolerance:${item.tolerance}\nvalue:${graphsel.calculation_output.balanceOutputVariables[index].value}` },grabbable: false});
+				nods.push({data: { id: `${nods.length}`, type:'cut-rectangle',parent:`${nods.length-1}`, data:`id:${item.id}\nsourceId:${item.sourceId}\ndestinationId:${item.destinationId}\nmeasured:${item.measured}\ncorrection:${item.correction}\ntechnologicUpperBound:${item.technologicUpperBound}\ntechnologicLowerBound:${item.technologicLowerBound}\ntolerance:${item.tolerance}\nvalue:${value}` },grabbable: false});
 
 				
 				
@@ -108,7 +115,7 @@ graphsel.calculation_input.BalanceInputVariables.forEach((item,index)=>{
 				nods.push({data: { id: nods.length, InOut:'triangle',color:'#FFD25F'}});
 				
 				nods.push({data: { id: `${nods.length}`, nod:'true',label:`${item.name}`,background: `${isMeasured}`, input:nods.length-1,output:item.destinationId   },grabbable: false});
-				nods.push({data: { id: `${nods.length}`, type:'cut-rectangle',parent:`${nods.length-1}`, data:`id:${item.id}\nsourceId:${item.sourceId}\ndestinationId:${item.destinationId}\nmeasured:${item.measured}\ncorrection:${item.correction}\ntechnologicUpperBound:${item.technologicUpperBound}\ntechnologicLowerBound:${item.technologicLowerBound}\ntolerance:${item.tolerance}\nvalue:${graphsel.calculation_output.balanceOutputVariables[index].value}` },grabbable: false});
+				nods.push({data: { id: `${nods.length}`, type:'cut-rectangle',parent:`${nods.length-1}`, data:`id:${item.id}\nsourceId:${item.sourceId}\ndestinationId:${item.destinationId}\nmeasured:${item.measured}\ncorrection:${item.correction}\ntechnologicUpperBound:${item.technologicUpperBound}\ntechnologicLowerBound:${item.technologicLowerBound}\ntolerance:${item.tolerance}\nvalue:${value}` },grabbable: false});
 			}
 		}
 
@@ -126,16 +133,17 @@ graphsel.calculation_input.BalanceInputVariables.forEach((item,index)=>{
 		style: cytoscape.stylesheet()
 		.selector('edge')
 				.css({
-
-					"curve-style": "straight",
+					"control-point-distances": [40, -40],
+					"curve-style": "bezier",
  					'width': 13,
 					'line-color': 'rgba(23, 41, 69, 0.95)',
 
 				})
 				.selector('edge[arrow][lineStyle][color]')
 				.css({
-
-					"curve-style": "straight",
+				
+					"control-point-distances": [400, -400],
+					"curve-style": "bezier",
  					'width': 13,
 					'line-color': 'data(color)',
 					'target-arrow-color': 'data(color)',
@@ -173,7 +181,7 @@ graphsel.calculation_input.BalanceInputVariables.forEach((item,index)=>{
 				"height":150,
 				'label': 'data(name)',
 					'color': 'wheat',
-					'font-size': '3em',
+					'font-size': '5em',
 					'text-outline-width': 1,
 					'text-outline-color': 'rgba(53, 89, 153, 0.95)',
 					'background-color': 'rgba(53, 89, 153, 0.95)',
@@ -265,14 +273,14 @@ const updateAB = function (source,target,potok){
 	let pos1 = cy.$("#"+source).position();
 	let pos2 = cy.$("#"+target).position();
 	
-let x= pos2.x-(pos2.x-pos1.x)/2;
-let y= pos2.y-(pos2.y-pos1.y)/2;
+let x= pos2.x-(pos2.x-pos1.x)/2.8;
+let y= pos2.y-(pos2.y-pos1.y)/2.8;
 let coords={x:x,y:y};
 cy.$("#"+potok).position(coords);
 };
 
 
-console.log(edgs);
+//console.log(edgs);
 edgs.forEach((item)=>{
 	const potok=arr.find(elem=>elem.data.input==item.data.source&&elem.data.output==item.data.target);
 	updateAB(item.data.source,item.data.target,potok.data.id);

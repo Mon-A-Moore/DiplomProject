@@ -1,10 +1,11 @@
-import {$authHost, $host} from "./index";
+import {$host} from "./index";
 
 
 export const balanceCalculationCompany = async (file,factoryId) => {
 	//console.log(file);
 	const {data} = await $host.post('api/balance/balanceCalculation/'+ factoryId, file, {headers:{'Content-Type': 'application/json'}})
-	
+if(data==="Failed to solve balance task.")
+throw new Error(data+"Скорее всего у вас есть неизмеряемые потоки");
 	return data;
 }
 

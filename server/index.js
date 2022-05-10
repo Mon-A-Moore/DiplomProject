@@ -26,9 +26,40 @@ const start = async () => {
     await sequelize.sync();
     app.listen(PORT, () => {
       console.log(`Server running ${PORT}`);
+		//	demo();
     });
+
   } catch (e) {
     console.log(e);
   }
 };
 start();
+
+
+
+/* const demo =   () => {
+  
+	let data =  require('./mass.json');
+	 data.BalanceInputVariables.forEach((item=>{
+		delete item.varType;
+		delete item.exactRounding;
+		delete item.inService;
+
+		item.metrologicUpperBound = item.metrologicRange.max;
+		item.metrologicLowerBound = item.metrologicRange.min;
+		delete item.metrologicRange;
+
+		item.technologicUpperBound = item.technologicRange.max;
+		item.technologicLowerBound = item.technologicRange.min;
+		delete item.technologicRange;
+	}))
+
+	
+	const fs = require('fs'); 
+	let outdata = JSON.stringify(data); 
+  fs.writeFileSync('outdata.json', outdata); 
+ console.log('This Functions uses');
+//	let data = JSON.stringify(jsonData);
+//console.info(data)
+	//const fs = require('fs'); 
+} */
