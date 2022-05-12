@@ -266,10 +266,11 @@ class BalanceController {
 			//input=JSON.parse(input);
 			//console.info('fffffffffffffffffffffffffffffffff');
 			//console.info(input);
-/* 			let input =  require("./outdata.json");
-			const result = await AccordSolver(input); */
-			let input = req.body;
-			await AccordSolver(JSON.stringify(input)).then((result)=>{
+		//	let input =  require("./outdata.json"); 
+
+		let input = req.body;
+await AccordSolver(JSON.stringify(input)).then(async(result)=>{
+		//	await AccordSolver(input).then(async(result)=>{
 
 			if(result.status!=="Success"){
 				
@@ -277,13 +278,13 @@ class BalanceController {
 			return res.json(mes);
 			}
 		//	console.info(result);
-      const balancecalculation =  BalanceCalculation.create({
+		 const balancecalculation = await BalanceCalculation.create({
         factoryId: factoryId,
       });
-      const calculationinput =  СalculationInput.create({
+      const calculationinput = await  СalculationInput.create({
         balanceCalculationId: balancecalculation.id,
       });
-       СalculationBalanceSettings.create({
+			await СalculationBalanceSettings.create({
         calculationInputId: calculationinput.id,
         balanceSettingsConstraints:
           input.balanceSettings.balanceSettingsConstraints,
@@ -315,7 +316,7 @@ class BalanceController {
       
       //	console.info(result);
       //	console.info(result.calculationTime);
-      const calculationoutput =  СalculationOutput.create({
+      const calculationoutput = await  СalculationOutput.create({
         calculationTime: result.calculationTime,
         disbalanceOriginal: result.disbalanceOriginal,
         disbalance: result.disbalance,

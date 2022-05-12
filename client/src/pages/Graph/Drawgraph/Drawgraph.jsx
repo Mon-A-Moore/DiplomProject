@@ -63,8 +63,8 @@ const nods=[],edgs=[];
 if(graphsel!==null){
 graphsel.calculation_input.BalanceInputVariables.forEach((item,index)=>{
 	let value=0;
-	console.log(index);
-	console.log(graphsel.calculation_output);
+/* 	console.log(index);
+	console.log(graphsel.calculation_output); */
 	if(typeof graphsel.calculation_output.balanceOutputVariables[index]?.value === "undefined")
 	value=0;
 else
@@ -121,6 +121,8 @@ value=graphsel.calculation_output.balanceOutputVariables[index].value;
 
 	}) 
 }
+console.log(nods);
+console.log(edgs);
 	let cy = window.cy = cytoscape({
 		container: document.getElementById('cy'),
 		zoom: 1,

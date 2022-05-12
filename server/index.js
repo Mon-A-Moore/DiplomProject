@@ -8,6 +8,7 @@ const router = require('./routes/index');
 const errorHandler = require('./middleware/ErrorHandlingMiddleware')
 const path = require('path')
 
+
 const PORT = process.env.PORT || 5000;
 
 const app = express();
@@ -37,6 +38,55 @@ start();
 
 
 
+
+/* function getRandomArbitary(min, max)
+{
+  return Math.random() * (max - min) + min;
+}
+
+
+const standart=(data)=>{
+	data.BalanceInputVariables.push(
+		{
+			"id": "00000000-0000-0000-0000-000000000001", 
+			"sourceId": "NULL", 
+			"destinationId": "00000000-0000-0000-0000-000000000001", 
+			"name": "X1", 
+			"measured": 10.005, 
+			"correction": 0, 
+			"metrologicUpperBound": 1000.0,
+			"metrologicLowerBound": 0.0,
+			"technologicUpperBound": 1000.0,
+			"technologicLowerBound": 0.0,
+			"tolerance": 0.2, 
+			"isMeasured": true, 
+			"isExcluded": false,
+		}
+	)
+	return data;
+}
+//fruits.at(-1)
+const generator=()=>{
+
+	let data={
+		"balanceSettings": {
+			"balanceSettingsConstraints": 0
+		},
+		"BalanceInputVariables": [
+			{},
+	]
+};
+  const N = 100;
+	let inmass= 1000;
+	//let stValue=0, enValue=0;
+	const input=getRandomArbitary(1,N/3);
+	const output=getRandomArbitary(1,N/3);
+	const sistemPoint=N-input-output-1;
+	for (let i = 0; i < N; i++){
+		data=standart(data);
+	}
+}
+ */
 /* const demo =   () => {
   
 	let data =  require('./mass.json');
