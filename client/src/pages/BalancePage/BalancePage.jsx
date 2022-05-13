@@ -8,7 +8,7 @@ import { observer } from 'mobx-react-lite';
 import { fetchOneCompany } from '../../http/companyAPI';
 import { Context } from '../../components/app/App';
 import { getAllFactory } from '../../http/factoryAPI';
-import { getSortBalance } from '../../http/balanceAPI';
+import { BADgetSortBalance } from '../../http/balanceAPI';
 
 const BalancePage = observer(() => {
   const { company } = useContext(Context);
@@ -37,7 +37,7 @@ const BalancePage = observer(() => {
 
   useEffect(() => {
 	  if (factory !== null && startDate !== null && endDate !== null)
-		  getSortBalance(factory, startDate, endDate).then(data => (
+		BADgetSortBalance(factory, startDate, endDate).then(data => (
 			//   console.log(data),
 			  setBalances(data)));
   }, [factory, startDate, endDate]);

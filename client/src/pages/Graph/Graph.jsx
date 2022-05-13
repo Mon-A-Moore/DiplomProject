@@ -2,7 +2,7 @@ import React, {useEffect, useState } from 'react';
 import style from './graph.module.scss';
 import classNames from 'classnames'
 import { getAllFactory } from '../../http/factoryAPI';
-import { getSortBalance } from '../../http/balanceAPI';
+import { fetchOnebalanceCalculationCompany, getSortBalance } from '../../http/balanceAPI';
 import Drawgraph from './Drawgraph/Drawgraph';
 
 
@@ -36,16 +36,18 @@ useEffect(() => {
 }, [factory,startDate,endDate]);
 
 
+
+
 const [graphsel, setGraphsel] = useState(null);
-useEffect(() => {
+useEffect(() =>  {
 	if(balanceSelect!==null){
 
 		balances.forEach(item=>{
 		
 			if(item.id===Number(balanceSelect))
 			{
-				
-			setGraphsel(item)
+				fetchOnebalanceCalculationCompany(factory,item.id).then((item)=>setGraphsel(item))
+
 			}
 		})
 

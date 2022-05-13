@@ -240,8 +240,8 @@ console.log(temp);
 }
 //получение баланса по id
 const GetOneBalance=async()=>{
-	const id =6;
-	const factoryId=1;
+	const id =2;
+	const factoryId=2;
 const tempo = await fetchOnebalanceCalculationCompany(factoryId,id)
 console.log(tempo);
 

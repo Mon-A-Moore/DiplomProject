@@ -28,3 +28,8 @@ export const getSortBalance = async (factoryId,dataStart,dataEnd) => {
 		const {data} = await $host.get('api/balance/' + factoryId+'/'+dataStart+'/'+dataEnd)
 		return data
 }
+export const BADgetSortBalance = async (factoryId,dataStart,dataEnd) => {
+	//console.log(input);
+		const {data} = await $host.get('api/balance/' + factoryId+'/'+dataStart+'/'+dataEnd+"/2")
+		return data
+}

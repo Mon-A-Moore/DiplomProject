@@ -52,6 +52,7 @@ useEffect(() => {
 			"isExcluded": false 
 
 */
+
 const chetchik=((a)=>{
 	const pos = a.lastIndexOf('-');
 	const znach = a.slice(pos+1)
@@ -105,7 +106,13 @@ value=graphsel.calculation_output.balanceOutputVariables[index].value;
 				nods.push({data: { id: `${nods.length}`, nod:'true',label:`${item.name}`,background: `${isMeasured}`, input:item.sourceId,output:nods.length-1   },grabbable: false});
 				nods.push({data: { id: `${nods.length}`, type:'cut-rectangle',parent:`${nods.length-1}`, data:`id:${item.id}\nsourceId:${item.sourceId}\ndestinationId:${item.destinationId}\nmeasured:${item.measured}\ncorrection:${item.correction}\ntechnologicUpperBound:${item.technologicUpperBound}\ntechnologicLowerBound:${item.technologicLowerBound}\ntolerance:${item.tolerance}\nvalue:${value}` },grabbable: false});
 
-				
+				const a= item.sourceId;
+				const aa= nods.find(item =>item.data.id ===a);
+				if(aa===undefined)
+				{
+			
+				nods.push({data: { id: `${a}`, name: chetchik(a) }});
+				}
 				
 			}
 			if(item.sourceId==="NULL")
@@ -114,8 +121,17 @@ value=graphsel.calculation_output.balanceOutputVariables[index].value;
 				edgs.push({data: { id: `0-${item.id}`, source: `${nods.length}`, target: item.destinationId, arrow:"triangle",lineStyle:"dashed",color:'#FFD25F'} });
 				nods.push({data: { id: nods.length, InOut:'triangle',color:'#FFD25F'}});
 				
+
+				
 				nods.push({data: { id: `${nods.length}`, nod:'true',label:`${item.name}`,background: `${isMeasured}`, input:nods.length-1,output:item.destinationId   },grabbable: false});
 				nods.push({data: { id: `${nods.length}`, type:'cut-rectangle',parent:`${nods.length-1}`, data:`id:${item.id}\nsourceId:${item.sourceId}\ndestinationId:${item.destinationId}\nmeasured:${item.measured}\ncorrection:${item.correction}\ntechnologicUpperBound:${item.technologicUpperBound}\ntechnologicLowerBound:${item.technologicLowerBound}\ntolerance:${item.tolerance}\nvalue:${value}` },grabbable: false});
+
+				const b= item.destinationId;
+				const bb= nods.find(item =>item.data.id ===b);
+				if(bb===undefined)
+				{
+				nods.push({data: { id: `${b}`, name: chetchik(b)  }});
+				}
 			}
 		}
 
