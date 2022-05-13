@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react'
-
+import style from './balancepage.module.scss';
 import { useTable, usePagination } from 'react-table'
 
 // Create an editable cell renderer
@@ -13,7 +13,11 @@ const EditableCell = ({
   const [value, setValue] = React.useState(initialValue)
 
   const onChange = e => {
-    setValue(e.target.value);
+    if (e.target.type == "checkbox") {
+      setValue(Boolean(e.target.checked));
+    } else {
+      setValue(Number(e.target.value));
+    }
   }
 
   // We'll only update the external data when the input is blurred
@@ -25,8 +29,15 @@ const EditableCell = ({
   React.useEffect(() => {
     setValue(initialValue)
   }, [initialValue])
-
-  return <input type="number" value={value} onChange={onChange} onBlur={onBlur} />
+  if (typeof initialValue != "boolean") {
+    return <input type="number" value={value} onChange={onChange} onBlur={onBlur} />
+  } else {
+    if (value) {
+      return <input type="checkbox" onChange={onChange} onBlur={onBlur} checked/>
+    } else {
+      return <input type="checkbox" onChange={onChange} onBlur={onBlur} />
+    }
+  }
 }
 
 // Set our editable cell renderer as the default Cell renderer
@@ -104,15 +115,11 @@ function SubTableComponent({
     () => [
       {
         Header: 'Наименование',
-        accessor: 'name',
+        accessor: 'transVar',
       },
       {
         Header: 'Значение',
         accessor: 'value',
-      },
-      {
-        Header: 'Единица измерения',
-        accessor: 'calculations',
       },
     ],
     []
@@ -152,12 +159,14 @@ function SubTableComponent({
   // so that if data actually changes when we're not
   // editing it, the page is reset
   React.useEffect(() => {
+    console.log(dataInput)
   }, [dataInput])
 
 
   const updateOneBalance = () =>updateOneBalanceCalculation(dataInput, dataRow.original.factoryId, dataRow.original.balancesId, dataRow.original.name)
   return (
     <>
+    <button className={style.input} onClick={updateOneBalance}>Отправить данные потока</button>
     <h3>Входные данные</h3>
       <SubTable
         columns={columns}
@@ -165,7 +174,7 @@ function SubTableComponent({
         updateMyData={updateMyData}
         editable = {true}
       />
-      <button onClick={updateOneBalance}>Отправить данные патока</button>
+      
       <h3>Выходные данные</h3>
       <SubTable
         columns={columns}

@@ -51,16 +51,12 @@ const BalanceTable = ({ balances, factory, startDate, endDate }) => {
         accessor: 'createdAt',
       },
       {
-        Header: 'Nазвание потока',
+        Header: 'Название потока',
         accessor: 'name',
       },
       {
         Header: 'Значение',
         accessor: 'value',
-      },
-      {
-        Header: 'Рассчитано',
-        accessor: 'calculations',
       },
     ],
     []
@@ -71,7 +67,7 @@ const BalanceTable = ({ balances, factory, startDate, endDate }) => {
   useEffect(() => {
     setData(makeData(balances));
   }, [balances]);
-  console.log(data);
+  // console.log(data);
   useEffect(() => {
     setSelectRow([]);
   }, [data]);
@@ -87,7 +83,7 @@ const BalanceTable = ({ balances, factory, startDate, endDate }) => {
         .find((x) => x.id === balancesId)
         .calculation_input.BalanceInputVariables.find((x) => x.name === name)[
         element.name
-      ] = Number(element.value);
+      ] = element.value;
     });
     await updateOneBalanceCalculationCompany(
       balances.find((x) => x.id === balancesId)
@@ -121,7 +117,7 @@ const BalanceTable = ({ balances, factory, startDate, endDate }) => {
   // Render the UI for your table
   return (
     <>
-      <div className={style.left_panel}>
+      <div className={style.right_panel}>
         <table bgcolor="#ffffff" {...getTableProps()}>
           <thead>
             {headerGroups.map((headerGroup) => (
@@ -159,11 +155,11 @@ const BalanceTable = ({ balances, factory, startDate, endDate }) => {
             })}
           </tbody>
         </table>
-        <pre>
+        <div className={style.left_panel}>
           {Object.keys(selectRow).length
             ? renderRowSubComponent(selectRow)
             : null}
-        </pre>
+        </div>
       </div>
     </>
   );

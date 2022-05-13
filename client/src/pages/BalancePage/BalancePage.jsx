@@ -27,7 +27,8 @@ const BalancePage = observer(() => {
   useEffect(() => {
 	  getAllFactory(localStorage.companyId).then(data => (
 		//   console.log(data),
-		  setFactories(data)));
+		  setFactories(data),
+		  setFactory(data[0].id)));
   }, []);
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
@@ -45,12 +46,12 @@ const BalancePage = observer(() => {
     <div className={style.container}>
       <div className={style.block}>
 			
-
-			<div className={styleGr.graphData}>
+		<div className={style.tableData}>
+		<div className={styleGr.graphData}>
 				<div className={styleTb.select}>
 					<label for="model-select">Фабрика</label>
 
-					<select id="model-select" onChange={e => setFactory(e.target.value)}>
+					<select className={style.input} onChange={e => setFactory(e.target.value)}>
 						{factories.map((item) => (
 							<option value={item.id}>{item.name}</option>
 						))}
@@ -61,7 +62,7 @@ const BalancePage = observer(() => {
 					<label for="data-start">Начальная дата</label>
 					<input
 						id="data-start"
-						className={styleGr.input}
+						className={style.input}
 						type="date"
 
 						onChange={(e) => setStartDate(e.target.value)}
@@ -71,15 +72,17 @@ const BalancePage = observer(() => {
 					<label for="data-end">Конечная дата</label>
 					<input
 						id="data-end"
-						className={styleGr.input}
+						className={style.input}
 						type="date"
 						onChange={(e) => setEndDate(e.target.value)}
 					/>
 				</div>
 			</div>
-		{balances.length ? <div className={style.main}>
+		</div>
+			
+		{balances.length ? 
           <BalanceTable balances={balances} factory={factory} startDate={startDate} endDate={endDate} />
-        </div> : null}
+        : null}
         
       </div>
     </div>

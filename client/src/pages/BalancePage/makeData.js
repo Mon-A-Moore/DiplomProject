@@ -8,18 +8,52 @@ const inputC = [
   "technologicUpperBound",
   "technologicLowerBound",
   "tolerance",
-  // "isMeasured",
-  // "isExcluded"
+  "isMeasured",
+  "isExcluded"
 ]
 
 const outputC = [
+  // "calculationOutputId",
+  "id",
+  // "idKey",
+  // "lowerBound",
+  "name",
+  "source",
+  "target",
+  // "upperBound",
+  "value",
+]
+
+const outputB = [
   "balanceCalculationId",
   "calculationTime",
   "disbalance",
   "disbalanceOriginal",
-  "globaltestValue",
-  "status",
+  // "globaltestValue",
+  // "status",
 ]
+
+const transVar = {
+  "measured": "Величина потока вещества",
+  "correction": "Скорректированная величина потока вещества",
+  "metrologicUpperBound": "Верхняя метрологическая граница значения потока вещества",
+  "metrologicLowerBound": "Нижняя метрологическая граница значения потока вещества",
+  "technologicUpperBound": "Верхняя технологическая граница значения потока вещества",
+  "technologicLowerBound": "Нижняя технологическая граница значения потока вещества",
+  "tolerance": "Абсолютная погрешность",
+  "id": "Идентификатор потока",
+  "name": "Имя потока",
+  "source": "Идентификатор узла источника",
+  "target": "Идентификатор узла цели",
+  "value": "Значение потока",
+  "balanceCalculationId": "Идентификатор расчетного баланса",
+  "calculationTime": "Время расчёта",
+  "disbalanceOriginal": "Дисбаланс оригинал",
+  "disbalance": "Дисбаланс",
+  "isMeasured": "Измеряемость потока",
+  "isExcluded": "Поток учитывается",
+}
+
 export default function makeData(balances) {
   const makeDataLevel = () => {
     return balances.map(b => {
@@ -34,7 +68,8 @@ export default function makeData(balances) {
               ...Object.entries(b.calculation_input.BalanceInputVariables.find(x => x.name === b2.name)).map(([key, value]) => {
                 return {
                   name:key,
-                  value:value
+                  value:value,
+                  transVar:transVar[key]
                 }
               }).filter((ob)=>{
                 return inputC.includes(ob.name)
@@ -45,19 +80,24 @@ export default function makeData(balances) {
               ...Object.entries(b.calculation_output.balanceOutputVariables.find(x => x.name === b2.name)).map(([key, value]) => {
                 return {
                   name:key,
-                  value:value
+                  value:value,
+                  transVar:transVar[key]
                 }
+              })
+              .filter((ob)=>{
+                return outputC.includes(ob.name)
               })
             ],
             balance_data:[
               ...Object.entries(b.calculation_output).map(([key, value]) => {
                 return {
                   name:key,
-                  value:value
+                  value:value,
+                  transVar:transVar[key]
                 }
               })
               .filter((ob)=>{
-                return outputC.includes(ob.name)
+                return outputB.includes(ob.name)
               })
             ]
           }
