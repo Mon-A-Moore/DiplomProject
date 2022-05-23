@@ -26,7 +26,7 @@ const CompanyInfo = sequelize.define('company_info', {
 const CompanyNews = sequelize.define('company_news', {
   id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
   title: { type: DataTypes.STRING, allowNull: false },
-  description: { type: DataTypes.STRING, allowNull: false },
+  description: { type: DataTypes.STRING(2000) , allowNull: false },
 },
 {onDelete: 'cascade', hooks:true}
 );

@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 
 import style from './navbar.module.scss';
-import { ADMIN_ROUTE, COMPANY_REGISTRATION_ROUTE, GRAPH_ROUTE, HOMEPAGE_ROUTE, LOGIN_ROUTE } from '../../utils/consts';
+import { ADMIN_ROUTE, BALANCE_ROUTE, HOMEPAGE_ROUTE, LOGIN_ROUTE } from '../../utils/consts';
 //import {ADMIN_ROUTE, LOGIN_ROUTE, SHOP_ROUTE} from "../utils/consts";
 
 import { observer } from 'mobx-react-lite';
@@ -14,7 +14,7 @@ import { Context } from '../app/App';
 const NavBar = observer(() => {
   const { state,setState } = useContext(Context);
   const location = useLocation();
-	const isHomepage = (location.pathname === HOMEPAGE_ROUTE)? true: (location.pathname === COMPANY_REGISTRATION_ROUTE)? true: (location.pathname === GRAPH_ROUTE)? true:false;
+	const isHomepage = (location.pathname === BALANCE_ROUTE)?false:true;
 
 
 	const navigate = useNavigate();
@@ -69,7 +69,7 @@ const NavBar = observer(() => {
           )}
         </div>
       ) : (
-        <></>
+        <div className={style.navbar}></div>
       )}
     </>
   );

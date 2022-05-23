@@ -1,41 +1,116 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import style from './companypage.module.scss';
 
 import Modal from '../../components/Modal/Modal';
-import CompanyPageItem from './CompanyPageItem';
 import BasicTable from '../../components/Table/BasicTable';
 import { observer } from 'mobx-react-lite';
-import { fetchOneCompany } from '../../http/companyAPI';
+import { CompanyInfoUpdate, CompanyNewsUpdate, fetchOneCompany } from '../../http/companyAPI';
 import { Context } from '../../components/app/App';
-import { fetchUsers } from '../../http/userAPI';
 import AddUser from '../../components/Modal/AddUser/AddUser';
 
 
 const CompanyPage = observer(() => {
   const { company } = useContext(Context);
-	const [info, setInfo] = useState({info: []});
-
+	const [info, setInfo] = useState([]);
+	const [news,setNews] = useState([]);
+  const [switcher, setSwitcher] = useState(false);
    useEffect(() => {
     fetchOneCompany(localStorage.companyId).then(data => (
 			console.log(data),
-			company.setCompany(data),setInfo(data)));
+			company.setCompany(data),setInfo(data.info),setNews(data.news.reverse())));
   }, []);
 
+  useEffect(() => {
+    setNews( news.sort(function(a,b){
+      return new Date(b.createdAt) - new Date(a.createdAt);
+    }))
+  }, [news]);
 
-const test=async()=>{
-
-	const a = await fetchUsers(localStorage.companyId);
-	a.map((item)=>{
-		delete item.password;
-		delete item.createdAt;
-		delete item.updatedAt;
-		delete item.id;
-		delete item.companyId;
-	})
-	console.log(a);
-}
-  const [modalActive, setModalActive] = useState(false);
 	const [modalUser, setModalUser] = useState(false);
+
+  
+
+	const dateParse=(item)=>{
+
+		let date = new Date(item);
+		let mass =["января","февраля", "марта", "апреля", "мая", "июня", "июля", "августа", "сентября", "октября", "ноября", "декабря"];
+		return `${date.getDate()} ${mass[date.getMonth()]} ${date.getFullYear()}, в ${date.getHours()}:${date.getMinutes()}`;
+
+	}
+
+
+  const NewsEndRef = useRef(null);
+  const scrollNews = () => {
+    NewsEndRef.current.scrollIntoView({ behavior: "smooth" })
+  }
+
+  const changeCompanyNews = (key, value, id) => {
+    setNews(news.map((i) => (i.id === id ? { ...i, [key]: value } : i)));
+  };
+  const removeCompanyNewsId = (id) => {
+    setNews(news.filter((i) => i.id !== id));
+  };
+
+	const addCompanyNews= () => {
+    scrollNews();
+    setNews([
+      {
+        id: -news.length,
+        title: '',
+        description: '',
+        createdAt:Date.now(),
+      },
+      ...news
+    ]);
+  };
+  const changeCheckedNews = (checked,id) => {
+    setNews(news.map((i) => (i.id === id ? { ...i, "checked": checked } : i)));   
+  };
+  const removeCompanyNewsChecked = () => {
+    setNews(news.filter((i) => i.checked !== true));   
+  };
+
+
+
+
+  const InfoEndRef = useRef(null);
+  const scrollInfo = () => {
+    InfoEndRef.current.scrollIntoView({ behavior: "smooth" })
+  }
+
+
+
+
+  const changeCompanyInfo = (key, value, id) => {
+    setInfo(info.map((i) => (i.id === id ? { ...i, [key]: value } : i)));
+  };
+  const removeCompanyInfoId = (id) => {
+    setInfo(info.filter((i) => i.id !== id));
+  };
+
+
+	const addCompanyInfo= () => {
+    scrollInfo();
+    setInfo([
+      ...info,
+      {
+        id: -info.length,
+        title: '',
+        description: '',
+      },
+    ]);
+  };
+
+//console.log(info);
+const setCompanyInfo=()=>{
+ CompanyInfoUpdate(info,localStorage.companyId)
+}
+const setCompanyNews=()=>{
+  CompanyNewsUpdate(news,localStorage.companyId)
+}
+
+console.log(info);
+
   return (
     <div className={style.container}>
       <div className={style.container__child}>
@@ -82,16 +157,54 @@ const test=async()=>{
 
           <div className={style.text}>
 					<h3 className={style.typography}>Информация о компании:</h3>
-            <ul className={style.list}>
-
-							 {info.info.map((item) => (
-                <CompanyPageItem  item={item} />
-              ))}  
-							
+            <ul  className={style.info_list}>
+            {switcher?
+              info.map((item) => (
+                <div  className={style.info_entry}>
+                  <div className={style.info_item_center}>
+                  <textarea  className={style.info_input_label} id="" placeholder='Заголовок' value={item.title} onChange={(e) => {
+                          changeCompanyInfo('title', e.target.value, item.id);
+                        }}>
+                        </textarea>
+                <textarea className={style.info_textarea} id="" placeholder='Текст' value={item.description} onChange={(e) => {
+                          changeCompanyInfo('description', e.target.value, item.id);
+                        }}></textarea>
+                  </div>
+                  <div className={style.item_divbutton}>
+                    <button className={style.item_divbutton_button} onClick={() => removeCompanyInfoId(item.id)}><svg className={style.svgDel} viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><g ><line  x1="7" x2="25" y1="7" y2="25"/><line  x1="7" x2="25" y1="25" y2="7"/></g></svg></button>
+                  </div>
+               </div>
+                 ))   
+                 :
+                 info.map((item) => (
+                  <div className={style.info_entry}>
+                    <div className={style.info_item_center}>
+                  <div className={style.info_input_label}>
+                    {item.title}:
+                  </div>
+                  {!item.title.indexOf("Сайт")|| !item.title.indexOf("Website") || !item.description.indexOf("https")? (
+                    <a className={style.info_text_a}  href={!item.description.indexOf("https")?item.description:`https://${item.description}`} target="_blank" rel="noreferrer">
+                      {item.description}
+                    </a>
+                  ) : (
+                    <div className={style.info_text}>{item.description}</div>
+                  )}
+                  </div>
+                </div>
+            ))
+       }
+  <div ref={InfoEndRef} ></div>
             </ul>
-            <button className={style.edit} onClick={() => setModalActive(true)}>
-              Редактировать информацию о компании
-            </button>
+            {switcher?
+            <div className={style.PanelWrapper}>
+            <div className={style.Panel}> 
+            <button className={style.Panel_item} onClick={() => addCompanyInfo()}>Добавить</button>
+            <button className={style.Panel_item} onClick={() => setCompanyInfo()}>Сохранить</button>
+            </div>
+            </div>
+             :
+             <></>
+             }
           </div>
         </div>
 					</div>
@@ -99,45 +212,73 @@ const test=async()=>{
         <div className={style.main}>
        {/*  <BasicTable /> */}
 			 <div className={style.news_content} >
-			 <ul className={style.news_list}>
-                <div className={style.news_entry}>
-                    <div className={style.news_label}>Тест запущен</div>
-                    <div className={style.news_text} >Регистрация доступна для всех желающих. Реализованы ещё не все игровые возможности, но работа ведётся каждый день. Как только мы достигнем приемлемого уровня играбельности, будут опубликованы посты о достигнутых успехах.</div>
-                    <div className={style.news_time} >23 марта 2021, в 15:00</div>
-                </div>
-								<div className={style.news_entry}>
-                    <div className={style.news_label}>Тест запущен</div>
-                    <div className={style.news_text} >Регистрация доступна для всех желающих. Реализованы ещё не все игровые возможности, но работа ведётся каждый день. Как только мы достигнем приемлемого уровня играбельности, будут опубликованы посты о достигнутых успехах.</div>
-                    <div className={style.news_time} >23 марта 2021, в 15:00</div>
-                </div>
-								<div className={style.news_entry}>
-                    <div className={style.news_label}>Тест запущен</div>
-                    <div className={style.news_text} >Регистрация доступна для всех желающих. Реализованы ещё не все игровые возможности, но работа ведётся каждый день. Как только мы достигнем приемлемого уровня играбельности, будут опубликованы посты о достигнутых успехах.</div>
-                    <div className={style.news_time} >23 марта 2021, в 15:00</div>
-                </div>
-								<div className={style.news_entry}>
-                    <div className={style.news_label}>Тест запущен</div>
-                    <div className={style.news_text} >Регистрация доступна для всех желающих. Реализованы ещё не все игровые возможности, но работа ведётся каждый день. Как только мы достигнем приемлемого уровня играбельности, будут опубликованы посты о достигнутых успехах.</div>
-                    <div className={style.news_time} >23 марта 2021, в 15:00</div>
-                </div>
-								<div className={style.news_entry}>
-                    <div className={style.news_label}>Тест запущен</div>
-                    <div className={style.news_text} >Регистрация доступна для всех желающих. Реализованы ещё не все игровые возможности, но работа ведётся каждый день. Как только мы достигнем приемлемого уровня играбельности, будут опубликованы посты о достигнутых успехах.</div>
-                    <div className={style.news_time} >23 марта 2021, в 15:00</div>
-                </div>
+         <label className={style.label}><h2>Последние новости:</h2></label>
+			 <ul  className={style.news_list}>
+       <div ref={NewsEndRef}></div>
+			 {switcher?
+              news.map((item) => (
+                <div  className={style.news_entry}>
+                  <input type="checkbox" className={style.news_checkbox} checked={item.checked?item.checked:false} onChange={(e) => {
+                          changeCheckedNews(e.target.checked, item.id);
+                        }}></input>
+                  <div className={style.news_item_center}>
+                  <input  className={style.news_input_label} id="" placeholder='Заголовок' value={item.title} onChange={(e) => {
+                          changeCompanyNews('title', e.target.value, item.id);
+                        }}>                         
+                        </input>
+                <textarea className={style.news_textarea} id="" placeholder='Текст' value={item.description} onChange={(e) => {
+                          changeCompanyNews('description', e.target.value, item.id);
+                        }}></textarea>
+                        <div className={style.news_time} >{dateParse(item.createdAt)}</div>
+                  </div>
+                  <div className={style.item_divbutton}>
+                    <button className={style.item_divbutton_button} onClick={() => removeCompanyNewsId(item.id)}><svg className={style.svgDel} viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><defs></defs><title/><g id="cross"><line class="cls-1" x1="7" x2="25" y1="7" y2="25"/><line class="cls-1" x1="7" x2="25" y1="25" y2="7"/></g></svg></button>
+                  </div>
+               </div>
+                 ))   
+                 :
+                 news.map((item) => (
+                  <div className={style.news_entry}>
+                     <div className={style.news_item_center}>
+                     <div className={style.news_label}>{item.title}</div>
+                     <div className={style.news_text} >{item.description}</div>
+                     <div className={style.news_time} >{dateParse(item.createdAt)}</div>
+                     </div>
+                 </div>
+                   ))
+       }
 								</ul>
+                {switcher?
+                <div className={style.PanelWrapper}>
+                  <div className={style.Panel}> 
+                  <button className={style.Panel_item} onClick={addCompanyNews}>Добавить</button>
+                  <button className={style.Panel_item}  onClick={() => removeCompanyNewsChecked()}>Удалить выбранные</button>
+                  <button className={style.Panel_item} onClick={() => setCompanyNews()}>Сохранить</button>
+                  </div>
+                   </div>
+                :
+                <></>
+                }
             </div>	
-						<div className={style.main_rightborder}></div>					
+					{/* 	<div className={style.main_rightborder}></div>		 */}			
         </div>
       </div>
-      <Modal active={modalActive} setActive={() => setModalActive(false)}>
-        <p>Заглушка</p>
-				<button className={style.test} onClick={() => test()}></button>
-				<button className={style.testUser} onClick={() => setModalUser(true)}>Польз</button>
-      </Modal>
+      {localStorage.role==="ADMIN"?
+      <div className={style.swither}>
+        <label className={style.swither_label}><p>Редактировать информацию о :</p></label>
+                  <div className={style.switherButtons}>
+                  <button className={style.switcher_item} onClick={() => setModalUser(true)}>
+              Пользователи
+            </button>
+            <button className={style.switcher_item} onClick={() => setSwitcher(!switcher)}>Компания</button>
+                  </div>
+      </div>
+      :<></>}
+
 			<Modal active={modalUser} setActive={() => setModalUser(false)} >
 			<AddUser setActive={setModalUser}/>
       </Modal>
+
 			
     </div>
   );

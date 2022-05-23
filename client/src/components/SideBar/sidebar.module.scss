@@ -1,9 +1,11 @@
 .container{
-	background-color: var(--color-bg);
+	background-color: unset;
 	min-width: 60px;
 	display: flex;
 	flex-direction: column;
+  align-items: flex-start;
 	z-index: 1;
+  gap:15px;
 	
 }
 
@@ -12,18 +14,15 @@
 	width: 40px;
 	margin: 2px 0;
 	border: 0;
-	background-color: var(--color-bg);
+	background-color: unset;
 	position: relative;
-	overflow: hidden;
+
 	display: flex;
 	flex-direction: row;
 	align-items: center;
 
 }
-.button:hover{
-	background-color: var(--color-item-form-border)
-	
-}
+
 
 .link{
 	display: flex;
@@ -40,4 +39,17 @@
 	height: 100%;
 	width: 100%;
 	background-color: var(--color-bg);
+}
+
+.svg {
+  margin-left: 10px;
+  height: 35px;
+  width: 35px;
+  fill: var(--color-auf-lite);
+  svg {
+    transition: 0.4s;
+    &:hover {
+      fill: var(--color-label);
+    }
+  }
 }

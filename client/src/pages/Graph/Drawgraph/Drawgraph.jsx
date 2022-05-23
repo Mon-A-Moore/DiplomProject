@@ -91,7 +91,7 @@ value=graphsel.calculation_output.balanceOutputVariables[index].value;
 		
 
 		nods.push({data: { id: `${nods.length}`, nod:'true',label:`${item.name}`,background: `${isMeasured}`, input:item.sourceId,output:item.destinationId  },grabbable: false});
-		nods.push({data: { id: `${nods.length}`, type:'cut-rectangle',parent:`${nods.length-1}`, data:`id:${item.id}\nsourceId:${item.sourceId}\ndestinationId:${item.destinationId}\nmeasured:${item.measured}\ncorrection:${item.correction}\ntechnologicUpperBound:${item.technologicUpperBound}\ntechnologicLowerBound:${item.technologicLowerBound}\ntolerance:${item.tolerance}\nvalue:${value}` },grabbable: false});
+		nods.push({data: { id: `${nods.length}`, type:'cut-rectangle',parent:`${nods.length-1}`, data:`Идентификатор потока: ${item.id}\nИдентификатор узла источника: ${item.sourceId}\nИдентификатор узла цели: ${item.destinationId}\nВеличина потока вещества: ${item.measured}\nСкорректированная величина потока вещества: ${item.correction}\nВерхняя метрологическая граница значения потока вещества: ${item.technologicUpperBound}\nНижняя метрологическая граница значения потока вещества: ${item.technologicLowerBound}\nАбсолютная погрешность: ${item.tolerance}\nЗначение потока: ${value}` },grabbable: false});
 
 
 
@@ -104,7 +104,7 @@ value=graphsel.calculation_output.balanceOutputVariables[index].value;
 				nods.push({data: { id: nods.length, InOut:'diamond',color:'#D073FF'}});
 
 				nods.push({data: { id: `${nods.length}`, nod:'true',label:`${item.name}`,background: `${isMeasured}`, input:item.sourceId,output:nods.length-1   },grabbable: false});
-				nods.push({data: { id: `${nods.length}`, type:'cut-rectangle',parent:`${nods.length-1}`, data:`id:${item.id}\nsourceId:${item.sourceId}\ndestinationId:${item.destinationId}\nmeasured:${item.measured}\ncorrection:${item.correction}\ntechnologicUpperBound:${item.technologicUpperBound}\ntechnologicLowerBound:${item.technologicLowerBound}\ntolerance:${item.tolerance}\nvalue:${value}` },grabbable: false});
+				nods.push({data: { id: `${nods.length}`, type:'cut-rectangle',parent:`${nods.length-1}`, data:`Идентификатор потока: ${item.id}\nИдентификатор узла источника: ${item.sourceId}\nИдентификатор узла цели: ${item.destinationId}\nВеличина потока вещества: ${item.measured}\nСкорректированная величина потока вещества: ${item.correction}\nВерхняя метрологическая граница значения потока вещества: ${item.technologicUpperBound}\nНижняя метрологическая граница значения потока вещества: ${item.technologicLowerBound}\nАбсолютная погрешность: ${item.tolerance}\nЗначение потока: ${value}` },grabbable: false});
 
 				const a= item.sourceId;
 				const aa= nods.find(item =>item.data.id ===a);
@@ -124,7 +124,7 @@ value=graphsel.calculation_output.balanceOutputVariables[index].value;
 
 				
 				nods.push({data: { id: `${nods.length}`, nod:'true',label:`${item.name}`,background: `${isMeasured}`, input:nods.length-1,output:item.destinationId   },grabbable: false});
-				nods.push({data: { id: `${nods.length}`, type:'cut-rectangle',parent:`${nods.length-1}`, data:`id:${item.id}\nsourceId:${item.sourceId}\ndestinationId:${item.destinationId}\nmeasured:${item.measured}\ncorrection:${item.correction}\ntechnologicUpperBound:${item.technologicUpperBound}\ntechnologicLowerBound:${item.technologicLowerBound}\ntolerance:${item.tolerance}\nvalue:${value}` },grabbable: false});
+				nods.push({data: { id: `${nods.length}`, type:'cut-rectangle',parent:`${nods.length-1}`, data:`Идентификатор потока: ${item.id}\nИдентификатор узла источника: ${item.sourceId}\nИдентификатор узла цели: ${item.destinationId}\nВеличина потока вещества: ${item.measured}\nСкорректированная величина потока вещества: ${item.correction}\nВерхняя метрологическая граница значения потока вещества: ${item.technologicUpperBound}\nНижняя метрологическая граница значения потока вещества: ${item.technologicLowerBound}\nАбсолютная погрешность: ${item.tolerance}\nЗначение потока: ${value}` },grabbable: false});
 
 				const b= item.destinationId;
 				const bb= nods.find(item =>item.data.id ===b);
@@ -221,7 +221,7 @@ console.log(edgs);
 
 				.selector('node[data][type]')
 				.css({
-					"width":450,
+					"width":600,
 					"height":180,
 				"text-valign": "center",//высота надписи по вертикали
     		"text-halign": "center", // надписи по горизонтали

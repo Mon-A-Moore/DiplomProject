@@ -7,6 +7,10 @@ export const createCompany = async (company) => {
 	return data
 }
 
+export const updateCompany = async (company) => {
+	const {data} = await $host.put('api/company',company)
+	return data
+}
 export const fetchCompany = async () => {
 	const {data} = await $host.get('api/company')
 	return data
@@ -29,6 +33,18 @@ export const deleteUsersCompany = async (delcompanyusers) => {
 	await $authHost.post('api/company/deleteusers', delcompanyusers)
 	return ;
 }
+
+export const CompanyInfoUpdate = async (info,companyId) => {
+	await $authHost.post('api/company/info', {info,companyId})
+	return ;
+}
+
+export const CompanyNewsUpdate = async (news,companyId) => {
+	await $authHost.post('api/company/news', {news,companyId})
+	return ;
+}
+
+
 
 /* 
 export const createDevice = async (device) => {

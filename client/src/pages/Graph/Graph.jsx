@@ -84,7 +84,7 @@ useEffect(() => {
 				<div className={classNames(style.menu,menuActive? style.menu_unactive:style.menu_active)}>
 
 				<label className={style.label} for="model-select">Модель</label>
-<div className={style.select}>
+<div  className={style.select}>
   <select id="model-select"  onChange={e=>setFactory(e.target.value)}>
 	<option value="0" selected="selected" data-skip="1">Выберите модель</option>
 	{factories.map((item)=>(
