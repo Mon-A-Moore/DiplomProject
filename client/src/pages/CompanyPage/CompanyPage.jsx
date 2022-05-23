@@ -52,7 +52,7 @@ const CompanyPage = observer(() => {
   };
 
 	const addCompanyNews= () => {
-    scrollNews();
+    
     setNews([
       {
         id: -news.length,
@@ -69,8 +69,6 @@ const CompanyPage = observer(() => {
   const removeCompanyNewsChecked = () => {
     setNews(news.filter((i) => i.checked !== true));   
   };
-
-
 
 
   const InfoEndRef = useRef(null);
@@ -90,7 +88,7 @@ const CompanyPage = observer(() => {
 
 
 	const addCompanyInfo= () => {
-    scrollInfo();
+    
     setInfo([
       ...info,
       {
@@ -101,6 +99,17 @@ const CompanyPage = observer(() => {
     ]);
   };
 
+  
+
+
+  useEffect(() => {
+    scrollNews();
+  },[news]);
+
+  useEffect(() => {
+    scrollInfo();
+    },[info]);
+  
 //console.log(info);
 const setCompanyInfo=()=>{
  CompanyInfoUpdate(info,localStorage.companyId)
