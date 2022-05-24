@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import style from './table.module.scss';
 import { useTable, useExpanded } from 'react-table';
 import {
+  BADgetSortBalance,
   balanceCalculationCompany,
   fetchAllbalanceCalculationCompany,
   fetchOnebalanceCalculationCompany,
@@ -88,7 +89,7 @@ const BalanceTable = ({ balances, factory, startDate, endDate }) => {
     await updateOneBalanceCalculationCompany(
       balances.find((x) => x.id === balancesId)
     );
-    getSortBalance(factory, startDate, endDate).then((data) =>
+    BADgetSortBalance(factory, startDate, endDate).then((data) =>
       setData(makeData(data))
     );
   };

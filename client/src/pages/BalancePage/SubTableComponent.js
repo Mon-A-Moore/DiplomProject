@@ -164,9 +164,16 @@ function SubTableComponent({
 
 
   const updateOneBalance = () =>updateOneBalanceCalculation(dataInput, dataRow.original.factoryId, dataRow.original.balancesId, dataRow.original.name)
+  .then((item)=>{
+    console.log(item);
+    console.log(dataInput);
+    console.log(dataOutput);
+    console.log(dataBalanceData);
+  }
+  )
   return (
     <>
-    <button className={style.input} onClick={updateOneBalance}>Отправить данные потока</button>
+    <button className={style.input} onClick={updateOneBalance}>Рассчитать баланс</button>
     <h3>Входные данные</h3>
       <SubTable
         columns={columns}
