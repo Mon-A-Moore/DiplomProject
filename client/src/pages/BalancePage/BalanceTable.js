@@ -7,7 +7,6 @@ import {
   balanceCalculationCompany,
   fetchAllbalanceCalculationCompany,
   fetchOnebalanceCalculationCompany,
-  getSortBalance,
   updateOneBalanceCalculationCompany,
 } from '../../http/balanceAPI';
 

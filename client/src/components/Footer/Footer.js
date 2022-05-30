@@ -4,7 +4,7 @@ import style from './footer.module.scss';
 
 import { observer } from 'mobx-react-lite';
 import { CustomLink } from '../CustomLink';
-import { BALANCE_ROUTE, COMPANY_REGISTRATION_ROUTE, COMPANY_ROUTE, GRAPH_ROUTE, HOMEPAGE_ROUTE } from '../../utils/consts';
+import { ADMIN_ROUTE, BALANCE_ROUTE, COMPANY_REGISTRATION_ROUTE, COMPANY_ROUTE, GRAPH_ROUTE, HOMEPAGE_ROUTE } from '../../utils/consts';
 import { useLocation } from 'react-router-dom';
 import { Context } from '../app/App';
 
@@ -13,7 +13,17 @@ import { Context } from '../app/App';
 const Footer = observer(() => {
   const { state } = useContext(Context);
   const location = useLocation();
-	const isHomepage = (location.pathname === BALANCE_ROUTE)?false:true;
+	const isHomepage = (location.pathname === ADMIN_ROUTE)?false:true;
+
+
+  if(location.pathname === HOMEPAGE_ROUTE) return null;
+  if(location.pathname === BALANCE_ROUTE) return (
+    <div className={style.footer} >
+					<div className={style.mid} >
+            <div className={style.test}></div>
+          </div>
+          </div>
+  );
   return (
     <>
       {state.user && !isHomepage ? (
@@ -24,7 +34,7 @@ const Footer = observer(() => {
 
         </div>
       ) : (
-        <div className={style.footer}></div>
+       <div className={style.footer}></div>
       )}
     </>
   );

@@ -30,12 +30,12 @@ const EditableCell = ({
     setValue(initialValue)
   }, [initialValue])
   if (typeof initialValue != "boolean") {
-    return <input type="number" value={value} onChange={onChange} onBlur={onBlur} />
+    return <input className={style.input} type="number" value={value} onChange={onChange} onBlur={onBlur} />
   } else {
     if (value) {
-      return <input type="checkbox" onChange={onChange} onBlur={onBlur} checked/>
+      return <input className={style.input} type="checkbox" onChange={onChange} onBlur={onBlur} checked/>
     } else {
-      return <input type="checkbox" onChange={onChange} onBlur={onBlur} />
+      return <input className={style.input} type="checkbox" onChange={onChange} onBlur={onBlur} />
     }
   }
 }
@@ -173,7 +173,6 @@ function SubTableComponent({
   )
   return (
     <>
-    <button className={style.input} onClick={updateOneBalance}>Рассчитать баланс</button>
     <h3>Входные данные</h3>
       <SubTable
         columns={columns}
@@ -181,7 +180,7 @@ function SubTableComponent({
         updateMyData={updateMyData}
         editable = {true}
       />
-      
+      <button className={style.input} onClick={updateOneBalance}>Рассчитать баланс</button>
       <h3>Выходные данные</h3>
       <SubTable
         columns={columns}

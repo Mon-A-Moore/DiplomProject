@@ -14,7 +14,7 @@ import { Context } from '../app/App';
 const NavBar = observer(() => {
   const { state,setState } = useContext(Context);
   const location = useLocation();
-	const isHomepage = (location.pathname === BALANCE_ROUTE)?false:true;
+	const isHomepage = (location.pathname === ADMIN_ROUTE)?false:true;
 
 
 	const navigate = useNavigate();
@@ -23,7 +23,15 @@ const NavBar = observer(() => {
 		setState(prev=>({...prev,user:false}));
 		navigate(HOMEPAGE_ROUTE,{ replace: true });
 }
-
+  if(location.pathname === HOMEPAGE_ROUTE) return null;
+  if(location.pathname === BALANCE_ROUTE) return (
+  <div className={style.navbar} >
+    <div className={style.mid} >
+      <div className={style.title}></div>
+      <div className={style.test}></div>
+    </div>
+  </div>
+  );
   return (
     <>
       {state.user && !isHomepage ?  (

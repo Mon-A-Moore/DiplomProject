@@ -144,13 +144,13 @@ viewBox="0 -5 40 40"  xmlSpace="preserve">
 				<div  id="menuResult" className={classNames(style.menuResult,menuResultActive? style.menuResult_unactive:style.menuResult_active)}>
 
 				<div   className={style.menuResult_item}>
-				<label className={style.label}>calculationTime:</label><br/><p>{graphsel!=null? graphsel.calculation_output.calculationTime :"null"}</p>
+				<label className={style.label}>Время сведения:</label><br/><p>{graphsel!=null? graphsel.calculation_output.calculationTime :"null"}</p>
 				</div>
 				<div   className={style.menuResult_item}>
-				<label className={style.label}>disbalanceOriginal:</label><br/><p>{graphsel!=null? graphsel.calculation_output.disbalanceOriginal :'null'} </p>
+				<label className={style.label}>Дисбаланс до коррекции:</label><br/><p>{graphsel!=null? graphsel.calculation_output.disbalanceOriginal :'null'} </p>
 				</div>
 				<div   className={style.menuResult_item}>
-				<label className={style.label}>disbalance:</label><br/><p>{graphsel!=null? graphsel.calculation_output.disbalance : 'null'} </p>
+				<label className={style.label}>Дисбаланс после коррекции:</label><br/><p>{graphsel!=null? graphsel.calculation_output.disbalance : 'null'} </p>
 				</div>
 				</div>
 				
