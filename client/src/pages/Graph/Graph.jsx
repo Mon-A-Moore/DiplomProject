@@ -4,11 +4,16 @@ import classNames from 'classnames'
 import { getAllFactory } from '../../http/factoryAPI';
 import { fetchOnebalanceCalculationCompany, getSortBalance } from '../../http/balanceAPI';
 import Drawgraph from './Drawgraph/Drawgraph';
-
+import Select from 'react-select'
 
 
 
 const Graph = () => {
+
+const massBalance=(data)=>{
+  data.forEach(n => (n.value = n.id, delete n.name,n.label = n.createdAt, delete n.createdAt));
+  setBalances(data)
+}
 
 const [menuActive,setMenuActive]=useState(false)
 const [menuResultActive,setMenuResultActive]=useState(false)
@@ -31,8 +36,11 @@ const [balanceSelect, setBalanceSelect] = useState(null);
 
 useEffect(() => {
 	if(factory!==null && startDate!==null && endDate!==null)
-	getSortBalance(factory,startDate,endDate).then(data => (
-		 setBalances(data)));
+	getSortBalance(factory,startDate,endDate).then((data) => 
+  {
+    setBalanceSelect(null)
+    massBalance(data);
+  });
 }, [factory,startDate,endDate]);
 
 
@@ -44,9 +52,9 @@ useEffect(() =>  {
 
 		balances.forEach(item=>{
 		
-			if(item.id===Number(balanceSelect))
+			if(item.value===Number(balanceSelect))
 			{
-				fetchOnebalanceCalculationCompany(factory,item.id).then((item)=>setGraphsel(item))
+				fetchOnebalanceCalculationCompany(factory,item.value).then((item)=>setGraphsel(item))
 
 			}
 		})
@@ -117,13 +125,17 @@ useEffect(() => {
 				</div>
 
 <label className={style.label} for="balance-select">Список балансов</label>
-<div className={classNames(style.select,style.selectMultiple)} onChange={e=>setBalanceSelect(e.target.value)}>
-  <select id="balance-select" multiple>
-	{balances.map((item)=>(
-						<option value={item.id}>{item.createdAt}</option>
-					))}
-  </select>
-  <span className={style.focus}></span>
+<div className={style.ReactSelect}>
+
+    <Select
+    id="balance-select"
+    value={balanceSelect}
+    onChange={setBalanceSelect}
+    options={balances}
+    placeholder="Выберите баланс"
+    noOptionsMessage={({inputValue}) => inputValue || "Лист балансов пуст"}
+    />
+
 </div>
 
 				</div>
