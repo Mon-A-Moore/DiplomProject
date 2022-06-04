@@ -29,7 +29,7 @@ const AccordSolver = async (file) => {
 
 class BalanceController {
 
-	//юзалось другим челом в таблице - полная срань, при больших объемах данных будет жопа
+	//юзалось в таблице, может быть долго и лучше использовать 2 вариант.
   async BAD_DateSort(req, res, next) {
     try {
       const { factoryId, dataStart, dataEnd } = req.params;
@@ -45,22 +45,34 @@ class BalanceController {
           {
             model: СalculationInput,
             include: [
-              { model: СalculationInputVariables, as: 'BalanceInputVariables' },
+             /*  { model: СalculationInputVariables, as: 'BalanceInputVariables' }, */
               { model: СalculationBalanceSettings, as: 'balanceSettings' },
             ],
           },
           {
             model: СalculationOutput,
-            include: [
+/*             include: [
               {
                 model: СalculationOutputVariables,
                 as: 'balanceOutputVariables',
               },
-            ],
+            ], */
           },
         ], 
       });
-      return res.json(balance);
+      const massiv = await Promise.all(balance.map( async(balance)=>{
+				
+				balance.dataValues.calculation_input.dataValues.BalanceInputVariables= await СalculationInputVariables.findAll({
+					where:{ calculationInputId: balance.calculation_input.id}
+				})
+				balance.dataValues.calculation_output.dataValues.balanceOutputVariables= await СalculationOutputVariables.findAll({
+					where:{ calculationOutputId: balance.calculation_output.id} 			
+				})
+
+				return balance;
+      }));
+
+      return res.json(massiv);
     } catch (e) {
       next(ApiError.badRequest(e.message));
     }
@@ -89,28 +101,35 @@ class BalanceController {
   async getAll(req, res, next) {
     try {
       const { factoryId } = req.params;
-      const balances = await BalanceCalculation.findAll({
-        where: { factoryId: factoryId },
+      const balance = await BalanceCalculation.findAll({
+        where: {
+          factoryId: factoryId,         
+        },
         include: [
           {
             model: СalculationInput,
             include: [
-              { model: СalculationInputVariables, as: 'BalanceInputVariables' },
               { model: СalculationBalanceSettings, as: 'balanceSettings' },
             ],
           },
           {
             model: СalculationOutput,
-            include: [
-              {
-                model: СalculationOutputVariables,
-                as: 'balanceOutputVariables',
-              },
-            ],
           },
-        ],
+        ], 
       });
-      return res.json(balances);
+      const massiv = await Promise.all(balance.map( async(balance)=>{
+				
+				balance.dataValues.calculation_input.dataValues.BalanceInputVariables= await СalculationInputVariables.findAll({
+					where:{ calculationInputId: balance.calculation_input.id}
+				})
+				balance.dataValues.calculation_output.dataValues.balanceOutputVariables= await СalculationOutputVariables.findAll({
+					where:{ calculationOutputId: balance.calculation_output.id} 			
+				})
+
+				return balance;
+      }));
+
+      return res.json(massiv);
     } catch (e) {
       next(ApiError.badRequest(e.message));
     }
@@ -286,10 +305,10 @@ class BalanceController {
 			//console.info('fffffffffffffffffffffffffffffffff');
 			//console.info(input);
 		//	let input =  require("./outdata.json"); 
-
+		//	await AccordSolver(input).then(async(result)=>{
 		let input = req.body;
 await AccordSolver(JSON.stringify(input)).then(async(result)=>{
-		//	await AccordSolver(input).then(async(result)=>{
+
 
 			if(result.status!=="Success"){
 				
