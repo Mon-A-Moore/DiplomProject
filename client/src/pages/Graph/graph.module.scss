@@ -277,7 +277,7 @@ g{
 	position: fixed;
 	width: $sizeWidth;
 	min-width: $sizeWidth;
-	height:220px;
+	height:260px;
 	min-height: 165px;
 	border-radius: 0 0 10px 0;
 	border-bottom: 1px solid var(--color-form-border);
@@ -303,7 +303,7 @@ g{
 }
 .menuResult_item{
 	width: 70%;
-	height: 80px;
+	height: 100px;
   border: 1px solid var(--color-item-form-border);
 	background-color: var(--color-item-form-background);
   border-radius: 0.25em;

@@ -52,7 +52,7 @@ useEffect(() =>  {
 
 		balances.forEach(item=>{
 		
-			if(item.value===Number(balanceSelect))
+			if(item.value===Number(balanceSelect.value))
 			{
 				fetchOnebalanceCalculationCompany(factory,item.value).then((item)=>setGraphsel(item))
 

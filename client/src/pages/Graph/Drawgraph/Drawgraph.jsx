@@ -6,7 +6,7 @@ import cytoscape from 'cytoscape';
 
 const Drawgraph = ({graphsel}) => {
 useEffect(() => {
-
+  //console.time('doSomething')
 
 /* 	
 добавить стрелки dashed где из 0 или в 0 уходит
@@ -331,7 +331,7 @@ cy.on('position', 'node', function(evt){
 		updateAB(source,target,potok.data.id);
 	})
 });
-
+//console.timeEnd('doSomething')
 }, [graphsel]); 
 
 
