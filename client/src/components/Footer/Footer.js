@@ -16,7 +16,7 @@ const Footer = observer(() => {
 	const isHomepage = (location.pathname === ADMIN_ROUTE)?false:true;
 
 
-  if(location.pathname === HOMEPAGE_ROUTE) return null;
+  if(location.pathname === HOMEPAGE_ROUTE || location.pathname === GRAPH_ROUTE) return null;
   if(location.pathname === BALANCE_ROUTE) return (
     <div className={style.footer} >
 					<div className={style.mid} >

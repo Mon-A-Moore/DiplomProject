@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 
 import style from './navbar.module.scss';
-import { ADMIN_ROUTE, BALANCE_ROUTE, HOMEPAGE_ROUTE, LOGIN_ROUTE } from '../../utils/consts';
+import { ADMIN_ROUTE, BALANCE_ROUTE, GRAPH_ROUTE, HOMEPAGE_ROUTE, LOGIN_ROUTE } from '../../utils/consts';
 //import {ADMIN_ROUTE, LOGIN_ROUTE, SHOP_ROUTE} from "../utils/consts";
 
 import { observer } from 'mobx-react-lite';
@@ -23,7 +23,7 @@ const NavBar = observer(() => {
 		setState(prev=>({...prev,user:false}));
 		navigate(HOMEPAGE_ROUTE,{ replace: true });
 }
-  if(location.pathname === HOMEPAGE_ROUTE) return null;
+if(location.pathname === HOMEPAGE_ROUTE || location.pathname === GRAPH_ROUTE) return null;
   if(location.pathname === BALANCE_ROUTE) return (
   <div className={style.navbar} >
     <div className={style.mid} >
