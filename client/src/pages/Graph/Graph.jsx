@@ -7,7 +7,6 @@ import Drawgraph from './Drawgraph/Drawgraph';
 import Select from 'react-select'
 
 
-
 const Graph = () => {
 
 const massBalance=(data)=>{
@@ -17,10 +16,6 @@ const massBalance=(data)=>{
 
 const [menuActive,setMenuActive]=useState(false)
 const [menuResultActive,setMenuResultActive]=useState(false)
-
-
-
-
 
 const [factory, setFactory] = useState(null);
 const [factories, setFactories] = useState([]);
@@ -42,8 +37,6 @@ useEffect(() => {
     massBalance(data);
   });
 }, [factory,startDate,endDate]);
-
-
 
 
 const [graphsel, setGraphsel] = useState(null);

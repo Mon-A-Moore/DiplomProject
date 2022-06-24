@@ -8,50 +8,7 @@ const Drawgraph = ({graphsel}) => {
 useEffect(() => {
   //console.time('doSomething')
 
-/* 	
-добавить стрелки dashed где из 0 или в 0 уходит
 
-
-"isMeasured": true,  если измеряемый - то задник зелёный, если нет - красный 
-
-это в отдельное поле div вывести слева наверху
-  "calculationTime": 0.0203991,
-  "disbalanceOriginal": 0.29433993952571247,
-  "disbalance": 1.4390135079995448e-15,
-	
-	
-	справа внизу убирающуюся стрелкой - легенду(карту знаков) - */
-/* 	const nods=[
-				{ data: { id: 'a'} },
-				{ data: { id: 'b', name:'1'} },
-				{ data: { id: 'd',name:'4'} },
-				{ data: { id: 'e',nod:'true', label:'X1',background:'red'},grabbable: false, },
-				{ data: { id: 'c',
-				data:"name: X1,\n measured: 10.005,\n correction: 0,\n 	technologicUpperBound: 1000.0,\n technologicLowerBound: 0.0,\n	tolerance: 0.2, \n value: 3.0144745895183522, ",
-
-				 type: "cut-rectangle",parent: "e"  },grabbable: false,},
-	],edgs=[
-		{ data: { id: 'ab', source: 'a', target: 'b' , arrow:"triangle",lineStyle:"dashed" } },
-		{ data: { id: 'bd', source: 'b', target: 'd', arrow:"triangle",lineStyle:"solid" } },
-
-	]; */
-
-/* 	
-			"id": "00000000-0000-0000-0000-000000000001", 
-			"sourceId": "NULL", 
-			"destinationId": "00000000-0000-0000-0000-000000000001", 
-			"name": "X1", 
-			"measured": 10.005, 
-			"correction": 0, 
-			"metrologicUpperBound": 1000.0,
-			"metrologicLowerBound": 0.0,
-			"technologicUpperBound": 1000.0,
-			"technologicLowerBound": 0.0,
-			"tolerance": 0.2, 
-			"isMeasured": true, 
-			"isExcluded": false 
-
-*/
 
 const chetchik=((a)=>{
 	const pos = a.lastIndexOf('-');
