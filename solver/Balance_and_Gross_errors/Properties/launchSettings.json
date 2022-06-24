@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "Balance_and_Gross_errors": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "https://localhost:4658;http://localhost:4659"
+    }
+  }
+}
