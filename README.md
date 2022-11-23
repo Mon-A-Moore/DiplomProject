@@ -1,11 +1,11 @@
 # DiplomProject
 
-Клиент
-добавить в каталог client файл .env со следующим содержание:
+Клиент:
+Добавить в каталог client файл .env со следующим содержание:
 REACT_APP_API_URL = 'http://localhost:8000/'
 
-Сервер
-добавить в каталог server файл .env со следующим содержание:
+Сервер: 
+Добавить в каталог server файл .env со следующим содержание:
 PORT = 8000
 DB_NAME=balance
 DB_USER=postgres
